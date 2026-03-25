@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RTF2 — The Legal Map | Reading the Fraud</title>
+<style>
+  :root {
+    --black: #111111;
+    --dark: #222222;
+    --mid: #555555;
+    --light: #999999;
+    --rule: #dddddd;
+    --bg: #ffffff;
+    --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --serif: Georgia, 'Times New Roman', serif;
+    --mono: 'Courier New', Courier, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.75;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* NAV */
+  #topnav {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--rule);
+    padding: 10px 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  #topnav .site-name {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .08em;
+    color: var(--mid);
+    white-space: nowrap;
+  }
+  #topnav .site-name a {
+    color: var(--mid);
+    text-decoration: none;
+  }
+  #topnav .site-name a:hover { color: var(--black); }
+  #nav-links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  #nav-links a {
+    font-size: 12px;
+    font-family: var(--mono);
+    color: var(--mid);
+    text-decoration: none;
+    letter-spacing: .05em;
+    white-space: nowrap;
+  }
+  #nav-links a:hover { color: var(--black); }
+
+  /* HERO */
+  #hero {
+    padding: 72px 0 48px;
+    border-bottom: 2px solid var(--black);
+  }
+  .doc-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .15em;
+    color: var(--light);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(26px, 5vw, 40px);
+    font-weight: normal;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .tagline {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--mid);
+    letter-spacing: .06em;
+    margin-bottom: 28px;
+  }
+  .hero-desc {
+    font-size: 15px;
+    color: var(--mid);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .series-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .series-nav a {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    padding: 6px 12px;
+    border: 1px solid var(--rule);
+    color: var(--mid);
+    text-decoration: none;
+    transition: all .15s;
+  }
+  .series-nav a:hover { border-color: var(--black); color: var(--black); }
+  .series-nav a.current {
+    background: var(--black);
+    color: var(--bg);
+    border-color: var(--black);
+  }
+
+  /* MOTTO */
+  .motto-block {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--serif);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--black);
+  }
+  .motto-attr {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-style: normal;
+    color: var(--light);
+    letter-spacing: .08em;
+    margin-top: 6px;
+  }
+
+  /* WHAT THIS IS */
+  .what-block {
+    padding: 36px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .what-block p {
+    font-size: 15px;
+    color: var(--mid);
+    margin-bottom: 12px;
+    line-height: 1.7;
+  }
+  .what-block p strong { color: var(--black); }
+
+  /* SECTION HEADERS */
+  .part-header {
+    padding: 40px 0 8px;
+  }
+  .part-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .15em;
+    color: var(--light);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .part-title {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: normal;
+    color: var(--black);
+    margin-bottom: 6px;
+  }
+  .part-sub {
+    font-size: 14px;
+    color: var(--mid);
+    font-family: var(--mono);
+  }
+
+  /* PATTERN CARDS */
+  .pattern {
+    border-bottom: 1px solid var(--rule);
+    padding: 32px 0;
+  }
+  .pattern-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    color: var(--light);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .pattern-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--black);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .plain-english {
+    background: #f8f8f8;
+    border-left: 3px solid var(--black);
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    font-size: 15px;
+    color: var(--dark);
+    line-height: 1.7;
+  }
+  .plain-english .pe-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 6px;
+  }
+  .law-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .law-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+    color: var(--dark);
+    line-height: 1.6;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .law-list li:last-child { border-bottom: none; }
+  .law-cite {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--black);
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .law-desc { color: var(--mid); }
+  .law-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 8px;
+    margin-top: 4px;
+  }
+  .note-block {
+    margin-top: 14px;
+    padding: 14px 18px;
+    border: 1px solid var(--rule);
+    font-size: 14px;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.6;
+  }
+  .note-block strong { color: var(--black); font-style: normal; }
+
+  /* THREE LINE ARGUMENT */
+  .three-line {
+    padding: 36px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .line-block {
+    margin-bottom: 24px;
+  }
+  .line-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    color: var(--light);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .line-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 6px;
+  }
+  .line-body {
+    font-size: 15px;
+    color: var(--dark);
+    line-height: 1.7;
+  }
+  .line-cite {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--mid);
+    margin-top: 4px;
+  }
+  .conclusion-block {
+    background: var(--black);
+    color: var(--bg);
+    padding: 20px 24px;
+    margin-top: 24px;
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* QUICK REFERENCE TABLE */
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 20px 0;
+  }
+  .ref-table th {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--light);
+    border-bottom: 2px solid var(--black);
+    padding: 10px 12px 10px 0;
+    text-align: left;
+  }
+  .ref-table td {
+    padding: 10px 12px 10px 0;
+    vertical-align: top;
+    border-bottom: 1px solid #f0f0f0;
+    color: var(--dark);
+    line-height: 1.5;
+  }
+  .ref-table td:first-child {
+    font-weight: 600;
+    color: var(--black);
+    width: 30%;
+  }
+  .ref-table td:nth-child(2) {
+    color: var(--mid);
+    width: 35%;
+  }
+  .ref-table td:last-child {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--mid);
+    width: 35%;
+  }
+
+  /* NOTE TO READER */
+  .reader-note {
+    padding: 40px 0;
+    border-top: 2px solid var(--black);
+    border-bottom: 1px solid var(--rule);
+  }
+  .reader-note p {
+    font-size: 15px;
+    color: var(--mid);
+    margin-bottom: 12px;
+    line-height: 1.7;
+  }
+  .reader-note p strong { color: var(--black); }
+
+  /* FOOTER */
+  footer {
+    padding: 48px 0 24px;
+    border-top: 1px solid var(--rule);
+    margin-top: 48px;
+  }
+  .mottos {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--black);
+    line-height: 2.4;
+    margin-bottom: 24px;
+  }
+  .footer-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--light);
+    letter-spacing: .06em;
+    line-height: 2;
+  }
+
+  @media(max-width:600px) {
+    body { font-size: 16px; padding: 0 16px 60px; }
+    h1 { font-size: 24px; }
+    #nav-links { display: none; }
+    .ref-table { font-size: 12px; }
+    .law-list li { flex-direction: column; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="topnav">
+  <span class="site-name"><a href="index.html">READINGTHEFRAUD.COM</a></span>
+  <div id="nav-links">
+    <a href="index.html">RTF0</a>
+    <a href="rtf1.html">RTF1</a>
+    <a href="rtf2.html">RTF2</a>
+    <a href="rtf3.html">RTF3</a>
+    <a href="rtf4.html">RTF4</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header id="hero">
+  <div class="doc-label">Reading the Fraud — Document Series</div>
+  <h1>RTF2 — The Legal Map</h1>
+  <p class="tagline">Plain English to Statute Cross-Reference</p>
+  <p class="hero-desc">RTF0 names the fraud in plain English. RTF3 establishes why IV-D proceedings are void. RTF4 maps the criminal exposure. <strong>RTF2 is the bridge.</strong> For every pattern RTF0 describes, this document names the law that governs it — in plain English, with the citation. No argument. No analysis. One pattern, one law, one sentence.</p>
+  <p class="hero-desc">When someone asks "okay, but what law says that?" — hand them this document.</p>
+  <div class="series-nav">
+    <a href="index.html">RTF0 — Foundation</a>
+    <a href="rtf1.html">RTF1 — Checklist</a>
+    <a class="current" href="rtf2.html">RTF2 — Legal Map</a>
+    <a href="rtf3.html">RTF3 — Void Ab Initio</a>
+    <a href="rtf4.html">RTF4 — Criminal Map</a>
+  </div>
+</header>
+
+<!-- MOTTO -->
+<div class="motto-block">
+  Due Process = Disclosure = Consent.
+  <div class="motto-attr">— Zachary L. Toler</div>
+</div>
+
+<!-- WHAT THIS IS -->
+<div class="what-block">
+  <p><strong>This document does not make the argument.</strong> RTF0 makes the argument in plain English. RTF3 establishes the void. RTF4 maps the criminal exposure.</p>
+  <p>This document gives you the name of the law that governs each pattern — so that when the system performs its authority, you can ask: <em>under which specific statute, applied by which specific individual, to which specific facts?</em></p>
+  <p>The answer to that question — or the silence where an answer should be — is the evidence.</p>
+  <p>Ask for what should exist. The absence of required documentation is the fraud made visible.</p>
+</div>
+
+<!-- PART ONE -->
+<div class="part-header">
+  <div class="part-num">Part One</div>
+  <div class="part-title">The Fraud Patterns and Their Laws</div>
+  <div class="part-sub">20 patterns. One law each. Plain English first.</div>
+</div>
+
+<!-- PATTERN 1 -->
+<div class="pattern" id="p1">
+  <div class="pattern-num">Pattern 01</div>
+  <div class="pattern-title">Financial Interest Voids Authority</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    When the person deciding your case profits from the outcome, they had no authority to decide it.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">Tumey v. Ohio<br>273 U.S. 510 (1927)</span><span class="law-desc">Financial interest in outcome voids adjudicatory authority.</span></li>
+    <li><span class="law-cite">Gibson v. Berryhill<br>411 U.S. 564 (1973)</span><span class="law-desc">No neutrality = no jurisdiction. Instruments are void, not voidable.</span></li>
+    <li><span class="law-cite">Caperton v. Massey<br>556 U.S. 868 (2009)</span><span class="law-desc">Appearance of bias from personal financial stake requires recusal.</span></li>
+    <li><span class="law-cite">Withrow v. Larkin<br>421 U.S. 35 (1975)</span><span class="law-desc">Tumey applies to agencies, not only courts.</span></li>
+    <li><span class="law-cite">Marshall v. Jerrico<br>446 U.S. 238 (1980)</span><span class="law-desc">Enforcement funding tied to outcomes violates neutrality.</span></li>
+    <li><span class="law-cite">45 C.F.R. § 305</span><span class="law-desc">Federal IV-D performance incentive formula — the conflict in regulation form.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 2 -->
+<div class="pattern" id="p2">
+  <div class="pattern-num">Pattern 02</div>
+  <div class="pattern-title">Inherent Rights Cannot Be Forfeited Through an Undisclosed Process</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    Parental rights, due process rights, and First Amendment rights exist before any court touched your life. You cannot surrender what belongs to you by nature. And none of it can be called consent when the structural conflict was never disclosed.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">U.S. Const.<br>amend. XIV</span><span class="law-desc">No state shall deprive any person of liberty without due process. The predicate is informed notice — not compliance under pressure.</span></li>
+    <li><span class="law-cite">Fuentes v. Shevin<br>407 U.S. 67 (1972)</span><span class="law-desc">Procedural due process requires disclosure before any deprivation.</span></li>
+    <li><span class="law-cite">Mathews v. Eldridge<br>424 U.S. 319 (1976)</span><span class="law-desc">Due process requires meaningful opportunity before deprivation.</span></li>
+    <li><span class="law-cite">Mullane v. Central Hanover Bank<br>339 U.S. 306 (1950)</span><span class="law-desc">Notice must be reasonably calculated to inform.</span></li>
+    <li><span class="law-cite">Stanley v. Illinois<br>405 U.S. 645 (1972)</span><span class="law-desc">Parental rights are inherent — existing prior to any state recognition. Cannot be eliminated by statute or surrendered by procedure.</span></li>
+  </ul>
+  <div class="note-block"><strong>The distinction the system erases:</strong> Waiver implies a free actor making an informed choice. Forfeiture under duress or undisclosed conflict is not waiver. It is extraction. The legal system calls it consent because calling it extraction would name what it is.</div>
+</div>
+
+<!-- PATTERN 3 -->
+<div class="pattern" id="p3">
+  <div class="pattern-num">Pattern 03</div>
+  <div class="pattern-title">Parental Rights Cannot Be Stripped by Default</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    A father's parental rights exist before the court says so. The state cannot eliminate them by statute without a proceeding.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">Stanley v. Illinois<br>405 U.S. 645 (1972)</span><span class="law-desc">Parental rights are inherent — cannot be defaulted by statute without due process.</span></li>
+    <li><span class="law-cite">Ohio R.C. 3109.042</span><span class="law-desc">Strips unmarried father's rights by default — unconstitutional under Stanley.</span></li>
+    <li><span class="law-cite">Ohio R.C. 3111.25</span><span class="law-desc">Father's signature on birth certificate = legal paternity establishment. A court proceeding after a signed birth certificate is redundant — or a second billing event.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 4 -->
+<div class="pattern" id="p4">
+  <div class="pattern-num">Pattern 04</div>
+  <div class="pattern-title">A Magistrate Cannot Issue Orders</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    A magistrate's decision is a recommendation until a judge adopts it. Calling a recommendation an "order" is acting outside legal authority. Documents produced outside legal authority are void.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">Ohio Civ.R. 53</span><span class="law-desc">Magistrate issues decisions and recommendations. Judge issues orders.</span></li>
+    <li><span class="law-cite">Ultra vires doctrine</span><span class="law-desc">Acts taken outside the scope of legal authority are void on their face.</span></li>
+    <li><span class="law-cite">Void ab initio</span><span class="law-desc">Void from the beginning — as though it never existed. Cannot be cured by subsequent proceedings.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 5 -->
+<div class="pattern" id="p5">
+  <div class="pattern-num">Pattern 05</div>
+  <div class="pattern-title">An Exhibit Is Not Evidence</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    Submitting something to a court does not make it true. It has to be authenticated, connected to a legal claim, and evaluated under a standard.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">Ohio Evid.R. 901</span><span class="law-desc">Authentication requirement — proponent must show document is what it claims to be.</span></li>
+    <li><span class="law-cite">Ohio Evid.R. 1002</span><span class="law-desc">Best evidence rule — original document required to prove content.</span></li>
+    <li><span class="law-cite">Ohio Evid.R. 401/402</span><span class="law-desc">Relevance — exhibit must be connected to a legal claim before it is evidence of anything.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 6 -->
+<div class="pattern" id="p6">
+  <div class="pattern-num">Pattern 06</div>
+  <div class="pattern-title">Blank Certificates of Service Prove Nothing</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    A certificate of service is a promise, not proof. Proof requires an independent record of delivery.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">Ohio Civ.R. 4</span><span class="law-desc">Service of process requirements — basis for jurisdiction over a person.</span></li>
+    <li><span class="law-cite">U.S. Const.<br>amend. XIV</span><span class="law-desc">Due process requires actual notice before rights are altered.</span></li>
+    <li><span class="law-cite">Mullane v. Central Hanover Bank<br>339 U.S. 306 (1950)</span><span class="law-desc">Notice must be reasonably calculated to reach the party.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 7 -->
+<div class="pattern" id="p7">
+  <div class="pattern-num">Pattern 07</div>
+  <div class="pattern-title">Incomplete Quotes Are Fabrications</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    Removing context that changes meaning is not quoting — it is manufacturing a misrepresentation.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">Ohio Evid.R. 106</span><span class="law-desc">Rule of completeness — if part of a writing is introduced, the opposing party may require introduction of any other part that fairness requires.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 1346</span><span class="law-desc">Honest services fraud — official using position to produce fraudulent result through concealment.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 8 -->
+<div class="pattern" id="p8">
+  <div class="pattern-num">Pattern 08</div>
+  <div class="pattern-title">Family Court Cannot Use Civil Rules and Criminal Enforcement Simultaneously</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    Either you get civil procedure protections or criminal procedure protections. Family court takes both enforcement powers while providing neither full set of protections.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">U.S. Const.<br>amend. VI</span><span class="law-desc">Right to jury trial in criminal proceedings.</span></li>
+    <li><span class="law-cite">U.S. Const.<br>amend. XIV</span><span class="law-desc">Due process — cannot impose criminal-style sanctions through civil procedure.</span></li>
+    <li><span class="law-cite">In re Oliver<br>333 U.S. 257 (1948)</span><span class="law-desc">Due process requirements for contempt proceedings.</span></li>
+    <li><span class="law-cite">Gompers v. United States<br>233 U.S. 604 (1914)</span><span class="law-desc">Criminal contempt requires full criminal procedure protections.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 9 -->
+<div class="pattern" id="p9">
+  <div class="pattern-num">Pattern 09</div>
+  <div class="pattern-title">Retaliation for Filing Federal Complaints Is a Crime</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    Filing a federal complaint is protected activity. Any adverse action taken against you for filing it is a federal crime.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">18 U.S.C. § 1513</span><span class="law-desc">Witness retaliation — adverse action against federal plaintiff after protected activity.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 1512</span><span class="law-desc">Witness tampering — intimidating or impeding a witness in a federal proceeding.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 1503</span><span class="law-desc">Obstruction of justice — influencing or impeding any party in a pending federal proceeding.</span></li>
+    <li><span class="law-cite">Nieves v. Bartlett<br>587 U.S. 391 (2019)</span><span class="law-desc">Retaliatory enforcement violates First Amendment.</span></li>
+    <li><span class="law-cite">Hartman v. Moore<br>547 U.S. 250 (2006)</span><span class="law-desc">Retaliatory prosecution — causation standard.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 10 -->
+<div class="pattern" id="p10">
+  <div class="pattern-num">Pattern 10</div>
+  <div class="pattern-title">Self-Representation Is the Original Right</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    Why do we need courts if we have to hire a lawyer? The court's stated function is to determine what is lawful and just. If access requires hiring a private intermediary, the court is not a public institution. It is a toll booth. The pressure to hire an attorney is the system protecting itself from someone who has learned to read it.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">Faretta v. California<br>422 U.S. 806 (1975)</span><span class="law-desc">Self-representation is the original constitutional right — forced counsel violates the Constitution.</span></li>
+    <li><span class="law-cite">U.S. Const.<br>amend. VI</span><span class="law-desc">Right to assistance of counsel includes the right to refuse it.</span></li>
+    <li><span class="law-cite">U.S. Const.<br>amend. XIV</span><span class="law-desc">Equal protection — a justice system accessible only to those with money is not equal protection under law.</span></li>
+    <li><span class="law-cite">Bounds v. Smith<br>430 U.S. 817 (1977)</span><span class="law-desc">The state has an affirmative obligation to provide meaningful access to the courts.</span></li>
+    <li><span class="law-cite">28 U.S.C. § 1654</span><span class="law-desc">Parties may plead and conduct their own cases personally in all federal courts.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 11 -->
+<div class="pattern" id="p11">
+  <div class="pattern-num">Pattern 11</div>
+  <div class="pattern-title">An Action Taken First, Then Approved, Is Still Unauthorized</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    Doing something without authorization and then getting it approved afterward does not make the original action authorized. Duration is not authorization.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">Fait accompli doctrine</span><span class="law-desc">Unauthorized action cannot be laundered into legitimacy by the passage of time.</span></li>
+    <li><span class="law-cite">Ohio Civ.R. 60(B)</span><span class="law-desc">Relief from judgment — does not apply to void judgments.</span></li>
+    <li><span class="law-cite">Void ab initio</span><span class="law-desc">A void proceeding cannot be cured by subsequent approval.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 12 -->
+<div class="pattern" id="p12">
+  <div class="pattern-num">Pattern 12</div>
+  <div class="pattern-title">Coordinated Multi-Court Fraud Is a Federal Crime</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    When multiple courts use each other's void orders as precedent, on coordinated timelines, producing a unified outcome — that is organized crime, not coincidence.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">18 U.S.C. §§ 1961–1964<br>(RICO)</span><span class="law-desc">Pattern of racketeering activity by an enterprise across jurisdictions.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 241</span><span class="law-desc">Conspiracy against rights — two or more persons coordinating to deprive constitutional rights.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 371</span><span class="law-desc">Conspiracy to defraud the United States — two or more persons plus one overt act.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 13 -->
+<div class="pattern" id="p13">
+  <div class="pattern-num">Pattern 13</div>
+  <div class="pattern-title">Debt Collected Through a Void Obligation Is Fraud</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    If the proceeding that created the support obligation was void, there was never a valid debt. Every dollar collected was collected by fraud.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">18 U.S.C. § 1956</span><span class="law-desc">Money laundering — processing proceeds of unlawful activity through financial transactions.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 1589</span><span class="law-desc">Forced labor — compelling performance through abuse of legal process.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 1581</span><span class="law-desc">Peonage — holding a person in debt servitude through threat of legal process.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 14 -->
+<div class="pattern" id="p14">
+  <div class="pattern-num">Pattern 14</div>
+  <div class="pattern-title">Officials Who Serve Undisclosed Financial Interests Are Committing Fraud</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    Every official owes honest service to the people they serve. Using official authority to advance a hidden financial interest is a federal crime.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">18 U.S.C. § 1346</span><span class="law-desc">Honest services fraud — scheme to deprive another of honest services through concealed self-dealing.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 1341</span><span class="law-desc">Mail fraud — each mailing in furtherance of the scheme is a separate count.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 1343</span><span class="law-desc">Wire fraud — each electronic filing is a separate count.</span></li>
+    <li><span class="law-cite">Skilling v. United States<br>561 U.S. 358 (2010)</span><span class="law-desc">Honest services fraud requires undisclosed self-dealing.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 15 -->
+<div class="pattern" id="p15">
+  <div class="pattern-num">Pattern 15</div>
+  <div class="pattern-title">A Guardian Ad Litem Who Serves the System Is Not Serving the Child</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    A GAL appointed to represent a child's interests who instead coordinates with the opposing party, bills for services not rendered, and produces reports serving a predetermined outcome is committing fraud.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">Ohio Sup.R. 48</span><span class="law-desc">Guardian ad litem duties and accountability standards.</span></li>
+    <li><span class="law-cite">Ohio R.C. 2151.281</span><span class="law-desc">GAL appointment requirements — fiduciary duty to the child.</span></li>
+    <li><span class="law-cite">Ohio Jud. Conduct<br>Rule 2.13</span><span class="law-desc">Judicial appointments require disclosure of conflicts.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 1346</span><span class="law-desc">Honest services fraud — GAL billing for services not rendered is wire/mail fraud predicate.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 16 -->
+<div class="pattern" id="p16">
+  <div class="pattern-num">Pattern 16</div>
+  <div class="pattern-title">Withholding Evidence Changes Meaning Just as Much as Lying</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    Leaving out information that changes the conclusion is the same as stating a falsehood. Courts are not allowed to present partial evidence as complete evidence.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">Ohio Evid.R. 106</span><span class="law-desc">Rule of completeness.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 1001</span><span class="law-desc">False statements — material omission to a federal agency.</span></li>
+    <li><span class="law-cite">Brady v. Maryland<br>373 U.S. 83 (1963)</span><span class="law-desc">Duty to disclose material evidence — suppression of evidence violates due process.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 17 -->
+<div class="pattern" id="p17">
+  <div class="pattern-num">Pattern 17</div>
+  <div class="pattern-title">Political Speech Cannot Be Used as Evidence of Mental Illness</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    Asking questions about government corruption is protected speech. Using those questions as evidence of instability in a legal proceeding is retaliation and fraud.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">U.S. Const.<br>amend. I</span><span class="law-desc">Freedom of speech — political speech receives the highest constitutional protection.</span></li>
+    <li><span class="law-cite">Nieves v. Bartlett<br>587 U.S. 391 (2019)</span><span class="law-desc">Retaliatory enforcement based on protected speech violates First Amendment.</span></li>
+    <li><span class="law-cite">42 U.S.C. § 1983</span><span class="law-desc">Civil liability for constitutional violations under color of law.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 242</span><span class="law-desc">Criminal deprivation of rights under color of law — willful violations.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 18 -->
+<div class="pattern" id="p18">
+  <div class="pattern-num">Pattern 18</div>
+  <div class="pattern-title">Violating Rights Under Color of Law Is a Crime</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    A government official who uses their official position to violate constitutional rights — even without a physical weapon — has committed a federal crime.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">42 U.S.C. § 1983</span><span class="law-desc">Civil remedy for constitutional violations under color of law.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 242</span><span class="law-desc">Criminal — deprivation of rights under color of law. Up to 10 years imprisonment.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 241</span><span class="law-desc">Criminal — conspiracy to deprive constitutional rights.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 19 -->
+<div class="pattern" id="p19">
+  <div class="pattern-num">Pattern 19</div>
+  <div class="pattern-title">Federal Court Can Determine Whether State Court Had Jurisdiction</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    Rooker-Feldman bars reviewing state court decisions. Void ab initio is different — it asks whether a valid decision ever existed. That question belongs in federal court.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">Rooker-Feldman doctrine</span><span class="law-desc">Federal courts cannot review state court judgments on appeal.</span></li>
+    <li><span class="law-cite">Void ab initio</span><span class="law-desc">No valid judgment ever existed — federal court has jurisdiction to determine whether state court had jurisdiction at inception.</span></li>
+    <li><span class="law-cite">Younger v. Harris<br>401 U.S. 37 (1971)</span><span class="law-desc">Federal abstention from ongoing state proceedings — three exceptions apply when state proceeding is conducted in bad faith, with harassment, or under a flagrantly unconstitutional statute.</span></li>
+  </ul>
+</div>
+
+<!-- PATTERN 20 -->
+<div class="pattern" id="p20">
+  <div class="pattern-num">Pattern 20</div>
+  <div class="pattern-title">Evidence Tampering Is a Crime</div>
+  <div class="plain-english">
+    <div class="pe-label">Plain English</div>
+    Altering, concealing, or fabricating evidence in a legal proceeding is a felony regardless of who does it.
+  </div>
+  <div class="law-label">The Law</div>
+  <ul class="law-list">
+    <li><span class="law-cite">Ohio R.C. 2921.12</span><span class="law-desc">Tampering with evidence — felony.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 1519</span><span class="law-desc">Destruction or falsification of records in federal investigations.</span></li>
+    <li><span class="law-cite">18 U.S.C. § 1512(c)</span><span class="law-desc">Obstruction by tampering with evidence in federal proceedings.</span></li>
+  </ul>
+</div>
+
+<!-- PART TWO -->
+<div class="part-header" style="padding-top:56px;">
+  <div class="part-num">Part Two</div>
+  <div class="part-title">The IV-D Conflict in Three Lines</div>
+  <div class="part-sub">The complete argument. Three documents. No more needed.</div>
+</div>
+
+<div class="three-line">
+  <div class="line-block">
+    <div class="line-num">Line 1 — The Conflict</div>
+    <div class="line-body">45 C.F.R. § 305 establishes that Ohio's county child support agencies receive federal financial incentives tied directly to collection performance. This creates a financial stake in the outcome of every case they administer.</div>
+    <div class="line-cite">45 C.F.R. § 305</div>
+  </div>
+  <div class="line-block">
+    <div class="line-num">Line 2 — The Law</div>
+    <div class="line-body">Tumey v. Ohio, 273 U.S. 510 (1927), held that a financial interest in the outcome voids adjudicatory authority. Gibson v. Berryhill confirmed the instruments produced are void — not merely voidable.</div>
+    <div class="line-cite">Tumey v. Ohio, 273 U.S. 510 (1927) — Gibson v. Berryhill, 411 U.S. 564 (1973)</div>
+  </div>
+  <div class="line-block">
+    <div class="line-num">Line 3 — The Missing Document</div>
+    <div class="line-body">No disclosure of this conflict was ever provided to the parties. No signed acknowledgment exists. Consent cannot be knowing when the conflict was never disclosed. The constitutional predicate for state authority — due process, disclosure, consent — was never met.</div>
+    <div class="line-cite">Fuentes v. Shevin, 407 U.S. 67 (1972) — U.S. Const. amend. XIV</div>
+  </div>
+  <div class="conclusion-block">
+    Three documents. Complete argument. Every IV-D proceeding built on this foundation is void from inception.
+  </div>
+</div>
+
+<!-- PART THREE -->
+<div class="part-header" style="padding-top:56px;">
+  <div class="part-num">Part Three</div>
+  <div class="part-title">Quick Reference Table</div>
+  <div class="part-sub">What happened → Plain English → The Law</div>
+</div>
+
+<div style="overflow-x:auto;padding:24px 0 40px;">
+<table class="ref-table">
+  <tr>
+    <th>What Happened</th>
+    <th>Plain English</th>
+    <th>The Law</th>
+  </tr>
+  <tr><td>Magistrate issued "ORDER"</td><td>Beyond legal authority</td><td>Ultra vires; Ohio Civ.R. 53</td></tr>
+  <tr><td>No paternity established before proceeding</td><td>Statute never attached</td><td>R.C. 3109.042; Stanley v. Illinois</td></tr>
+  <tr><td>IV-D agency had financial stake</td><td>Conflict voids authority</td><td>Tumey; 45 C.F.R. § 305</td></tr>
+  <tr><td>No disclosure of financial conflict</td><td>Consent was never possible</td><td>Fuentes; U.S. Const. amend. XIV</td></tr>
+  <tr><td>Blank certificate of service</td><td>Service never verified</td><td>Ohio Civ.R. 4; Mullane</td></tr>
+  <tr><td>Screenshot submitted without authentication</td><td>Not evidence</td><td>Ohio Evid.R. 901</td></tr>
+  <tr><td>Quote removed from context</td><td>Fabrication</td><td>Ohio Evid.R. 106</td></tr>
+  <tr><td>Exhibit list = surveillance log</td><td>Reveals the surveillant</td><td>Evid.R. 401; Nieves</td></tr>
+  <tr><td>Federal complaint used as state court exhibit</td><td>Retaliation signal</td><td>18 U.S.C. § 1513</td></tr>
+  <tr><td>"Get a lawyer" to stop void ab initio argument</td><td>Enterprise defense</td><td>Faretta; 18 U.S.C. § 1346</td></tr>
+  <tr><td>Appeal filed on void order</td><td>Accepts validity of void</td><td>Void ab initio; Ohio Civ.R. 60(B)</td></tr>
+  <tr><td>Duration of void proceeding</td><td>Not authorization</td><td>Fait accompli; void ab initio</td></tr>
+  <tr><td>Support collected on void obligation</td><td>Proceeds of fraud</td><td>18 U.S.C. §§ 1956, 1589</td></tr>
+  <tr><td>Multiple courts using each other's void orders</td><td>Coordination pattern</td><td>18 U.S.C. §§ 1961–1964 (RICO)</td></tr>
+  <tr><td>Officials ignoring documented complaints</td><td>Misprision / RICO participation</td><td>18 U.S.C. § 4; § 1962</td></tr>
+  <tr><td>Political posts used as mental illness evidence</td><td>First Amendment violation</td><td>U.S. Const. amend. I; Nieves</td></tr>
+</table>
+</div>
+
+<!-- NOTE TO READER -->
+<div class="reader-note">
+  <p><strong>This document does not make the argument.</strong> RTF0 makes the argument in plain English. RTF3 establishes the void. RTF4 maps the criminal exposure.</p>
+  <p>This document gives you the name of the law that governs each pattern — so that when the system performs its authority, you can ask: <em>under which specific statute, applied by which specific individual, to which specific facts?</em></p>
+  <p>The answer to that question — or the silence where an answer should be — is the evidence. Ask for what should exist. The absence of required documentation is the fraud made visible.</p>
+  <p style="font-size:16px;font-weight:700;color:var(--black);">The fraud only works if you can't read it.<br>You can read it now.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="mottos">
+    "Due Process = Disclosure = Consent."<br>
+    "Remove the costume. Describe the conduct."<br>
+    "The fraud only works if you can't read it."<br>
+    "You can read it now."
+  </div>
+  <div class="footer-meta">
+    RTF2 — The Legal Map | Version 1.0 | Published: March 24, 2026<br>
+    Living Document | Educational purposes only. Not legal advice.<br><br>
+    TOLER LEEGAL FOUNDATION &nbsp;·&nbsp; READINGTHEFRAUD.COM &nbsp;·&nbsp; TOLER FOR GOVERNOR
+  </div>
+</footer>
+
+</body>
+</html>
