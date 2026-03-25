@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RTF4 — Criminal Prosecution Map | Reading the Fraud</title>
+<style>
+  :root {
+    --black: #111111;
+    --dark: #222222;
+    --mid: #555555;
+    --light: #999999;
+    --rule: #dddddd;
+    --bg: #ffffff;
+    --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --serif: Georgia, 'Times New Roman', serif;
+    --mono: 'Courier New', Courier, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.75;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+  #topnav {
+    position: sticky; top: 0; background: var(--bg);
+    border-bottom: 1px solid var(--rule); padding: 10px 0;
+    z-index: 100; display: flex; align-items: center;
+    justify-content: space-between; gap: 12px;
+  }
+  #topnav .site-name { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--mid); white-space: nowrap; }
+  #topnav .site-name a { color: var(--mid); text-decoration: none; }
+  #topnav .site-name a:hover { color: var(--black); }
+  #nav-links { display: flex; gap: 16px; flex-wrap: wrap; justify-content: flex-end; }
+  #nav-links a { font-size: 12px; font-family: var(--mono); color: var(--mid); text-decoration: none; letter-spacing: .05em; white-space: nowrap; }
+  #nav-links a:hover { color: var(--black); }
+  #hero { padding: 72px 0 48px; border-bottom: 2px solid var(--black); }
+  .doc-label { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; color: var(--light); text-transform: uppercase; margin-bottom: 16px; }
+  h1 { font-family: var(--serif); font-size: clamp(26px, 5vw, 40px); font-weight: normal; line-height: 1.2; margin-bottom: 10px; }
+  .tagline { font-family: var(--mono); font-size: 13px; color: var(--mid); letter-spacing: .06em; margin-bottom: 28px; }
+  .hero-desc { font-size: 15px; color: var(--mid); max-width: 600px; line-height: 1.7; margin-bottom: 12px; }
+  .series-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+  .series-nav a { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; padding: 6px 12px; border: 1px solid var(--rule); color: var(--mid); text-decoration: none; transition: all .15s; }
+  .series-nav a:hover { border-color: var(--black); color: var(--black); }
+  .series-nav a.current { background: var(--black); color: var(--bg); border-color: var(--black); }
+  .motto-block { padding: 28px 0; border-bottom: 1px solid var(--rule); font-family: var(--serif); font-size: 18px; font-style: italic; color: var(--black); }
+  .motto-attr { font-family: var(--mono); font-size: 11px; font-style: normal; color: var(--light); letter-spacing: .08em; margin-top: 6px; }
+  .what-block { padding: 36px 0; border-bottom: 1px solid var(--rule); }
+  .what-block p { font-size: 15px; color: var(--mid); margin-bottom: 12px; line-height: 1.7; }
+  .what-block p strong { color: var(--black); }
+  .progression { display: flex; gap: 0; flex-wrap: wrap; margin: 20px 0; }
+  .prog-step { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; padding: 8px 14px; border: 1px solid var(--rule); color: var(--mid); }
+  .prog-step.current-doc { background: var(--black); color: var(--bg); border-color: var(--black); }
+  .doc-section { border-bottom: 1px solid var(--rule); }
+  .section-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 32px 0 28px; cursor: pointer; user-select: none; }
+  .section-header:hover .section-title { color: var(--mid); }
+  .section-meta { flex: 1; }
+  .section-num { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--light); text-transform: uppercase; margin-bottom: 6px; }
+  .section-title { font-family: var(--serif); font-size: 22px; font-weight: normal; line-height: 1.3; color: var(--black); transition: color .15s; }
+  .section-sub { font-family: var(--mono); font-size: 12px; color: var(--light); margin-top: 4px; letter-spacing: .05em; }
+  .toggle-icon { font-family: var(--mono); font-size: 20px; color: var(--light); flex-shrink: 0; margin-top: 6px; }
+  .section-body { display: none; padding-bottom: 40px; }
+  .section-body.open { display: block; }
+  .section-body h3 { font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); margin: 36px 0 14px; padding-bottom: 6px; border-bottom: 1px solid var(--rule); }
+  .section-body h4 { font-family: var(--serif); font-size: 17px; font-weight: bold; color: var(--black); margin: 28px 0 10px; }
+  .section-body p { margin-bottom: 16px; color: var(--dark); }
+  .section-body p.lead { font-family: var(--serif); font-size: 19px; line-height: 1.6; color: var(--black); margin-bottom: 24px; }
+  .section-body ul, .section-body ol { margin: 0 0 16px 24px; }
+  .section-body li { margin-bottom: 8px; color: var(--dark); }
+  .ladder { font-family: var(--mono); font-size: 13px; line-height: 2; background: #f8f8f8; border-left: 3px solid var(--black); padding: 20px 24px; margin: 20px 0 24px; color: var(--dark); white-space: pre-wrap; }
+  .pull { font-family: var(--serif); font-size: 20px; line-height: 1.5; color: var(--black); border-top: 2px solid var(--black); border-bottom: 1px solid var(--rule); padding: 20px 0; margin: 32px 0; }
+  .plain-block { background: #f8f8f8; border-left: 3px solid var(--black); padding: 16px 20px; margin: 20px 0; }
+  .plain-label { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--light); margin-bottom: 6px; }
+  .plain-body { font-size: 15px; color: var(--dark); line-height: 1.7; }
+  .statute-block { border: 1px solid var(--rule); padding: 20px 24px; margin: 16px 0; }
+  .statute-name { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--black); letter-spacing: .06em; margin-bottom: 6px; }
+  .statute-plain { font-size: 15px; color: var(--dark); margin-bottom: 8px; font-weight: 600; }
+  .statute-elements { font-size: 14px; color: var(--mid); line-height: 1.7; }
+  .matrix-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 20px 0; }
+  .matrix-table th { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); border-bottom: 2px solid var(--black); padding: 8px 10px 8px 0; text-align: left; }
+  .matrix-table td { padding: 10px 10px 10px 0; vertical-align: top; border-bottom: 1px solid #f0f0f0; color: var(--dark); line-height: 1.5; font-size: 13px; }
+  .matrix-table td:first-child { font-weight: 600; color: var(--black); }
+  .matrix-table td .cite { font-family: var(--mono); font-size: 11px; color: var(--mid); }
+  .escalation { font-family: var(--mono); font-size: 13px; line-height: 2.2; background: var(--black); color: var(--bg); padding: 24px 28px; margin: 24px 0; white-space: pre-wrap; }
+  .conclusion-block { background: var(--black); color: var(--bg); padding: 20px 24px; margin: 24px 0; font-family: var(--serif); font-size: 16px; line-height: 1.7; }
+  .case-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 20px 0; }
+  .case-table th { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); border-bottom: 2px solid var(--black); padding: 8px 10px 8px 0; text-align: left; }
+  .case-table td { padding: 10px 10px 10px 0; vertical-align: top; border-bottom: 1px solid #f0f0f0; color: var(--dark); line-height: 1.5; font-size: 13px; }
+  .case-table td:first-child { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--black); white-space: nowrap; padding-right: 16px; }
+  footer { padding: 48px 0 24px; border-top: 1px solid var(--rule); margin-top: 48px; }
+  .mottos { font-family: var(--mono); font-size: 12px; color: var(--black); line-height: 2.4; margin-bottom: 24px; }
+  .footer-meta { font-family: var(--mono); font-size: 11px; color: var(--light); letter-spacing: .06em; line-height: 2; }
+  @media(max-width:600px) {
+    body { font-size: 16px; padding: 0 16px 60px; }
+    h1 { font-size: 24px; }
+    #nav-links { display: none; }
+    .ladder { font-size: 12px; }
+    .matrix-table { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="topnav">
+  <span class="site-name"><a href="index.html">READINGTHEFRAUD.COM</a></span>
+  <div id="nav-links">
+    <a href="index.html">RTF0</a>
+    <a href="rtf1.html">RTF1</a>
+    <a href="rtf2.html">RTF2</a>
+    <a href="rtf3.html">RTF3</a>
+    <a href="rtf4.html">RTF4</a>
+  </div>
+</nav>
+
+<header id="hero">
+  <div class="doc-label">Reading the Fraud — Document Series</div>
+  <h1>RTF4 — Criminal Prosecution Map</h1>
+  <p class="tagline">From Color of Law to Federal Criminal Liability</p>
+  <p class="hero-desc">RTF3 established that IV-D proceedings were void ab initio. RTF4 names what the conduct is. <strong>Criminally.</strong></p>
+  <p class="hero-desc">The same acts that create civil liability under 42 U.S.C. § 1983 simultaneously constitute federal criminal violations. This is not a choice between civil and criminal response. It is both tracks, running simultaneously, on the same conduct.</p>
+  <div class="progression">
+    <div class="prog-step">RTF0 — Recognize</div>
+    <div class="prog-step">RTF1 — Identify</div>
+    <div class="prog-step">RTF2 — Name the Law</div>
+    <div class="prog-step">RTF3 — Establish the Void</div>
+    <div class="prog-step current-doc">RTF4 — Prosecute</div>
+  </div>
+  <div class="series-nav" style="margin-top:16px;">
+    <a href="index.html">RTF0 — Foundation</a>
+    <a href="rtf1.html">RTF1 — Checklist</a>
+    <a href="rtf2.html">RTF2 — Legal Map</a>
+    <a href="rtf3.html">RTF3 — Void Ab Initio</a>
+    <a class="current" href="rtf4.html">RTF4 — Criminal Map</a>
+  </div>
+</header>
+
+<div class="motto-block">
+  The badge does not change the conduct. It changes the costume.
+  <div class="motto-attr">— Zachary L. Toler</div>
+</div>
+
+<div class="what-block">
+  <p><strong>Three readers, one document.</strong> Every part is written for three audiences simultaneously: the citizen who needs plain English, the pro se litigant who needs the legal map, and the federal prosecutor who needs the elements. Each reader takes what they need.</p>
+  <p><strong>The civil track</strong> provides damages and injunctive relief. <strong>The criminal track</strong> provides prosecution, imprisonment, and asset forfeiture. Neither replaces the other. Neither is optional once the conduct is documented.</p>
+  <p>After service of this document — continued action by any notified official is documented willfulness. The "I didn't know" defense is permanently unavailable.</p>
+</div>
+
+<!-- PART ONE: THE BRIDGE -->
+<section class="doc-section" id="sec-bridge">
+  <div class="section-header" onclick="toggleSection('sec-bridge')">
+    <div class="section-meta">
+      <div class="section-num">Part One</div>
+      <div class="section-title">The Bridge — When Ultra Vires Becomes Criminal</div>
+      <div class="section-sub">The threshold where civil liability becomes criminal prosecution.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-bridge">+</div>
+  </div>
+  <div class="section-body" id="body-sec-bridge">
+    <p class="lead">42 U.S.C. § 1983 and 18 U.S.C. § 242 cover identical conduct — the same act, two tracks. The distinction between them is willfulness.</p>
+    <p>Section 1983 attaches when rights are violated under color of law. Section 242 attaches when the violation is willful — when the official knew the conduct was unlawful and proceeded anyway. RTF3 eliminated the "I didn't know" defense across the board. Tumey is 100 years old. After service of this document, continued action is documented willfulness. The § 242 threshold is crossed.</p>
+
+    <h3>Ultra Vires as the Mechanism</h3>
+    <p>When authority is void, every act taken under the claim of that authority is not an official act. It is a private act committed while wearing a government costume. A human without valid authority who issues an instrument captioned as an order is not a malfunctioning official. That human is a private actor committing crimes under color of law.</p>
+    <div class="plain-block">
+      <div class="plain-label">Plain English</div>
+      <div class="plain-body">The same action can be a civil rights violation and a crime. The robe doesn't change what happened underneath it. It changes who is responsible for what.</div>
+    </div>
+
+    <h3>Claim Conversion and the Strawman Dismissal</h3>
+    <p><strong>Claim Conversion</strong> is the substitution of a different legal claim for the one actually filed — at the intake level, prior to any analysis — followed by dismissal of the substituted claim. The original claim is never addressed. The dismissal creates the appearance of adjudication without performing it.</p>
+    <p>The tell: the dismissal order describes a claim that doesn't match the filing language. Civil rights complaint converted into custody appeal. First sentence of opinion performs the conversion before any legal analysis begins.</p>
+    <p><strong>Strawman Dismissal</strong> is the judicial-level version. The court identifies a claim the plaintiff did not make, attributes it to the plaintiff, applies the correct legal standard to that invented claim, dismisses it, and closes the case — without ever addressing the actual claim filed. The plaintiff's real claim survives undisturbed and unadjudicated.</p>
+    <p>Distinguished from Claim Conversion: Claim Conversion is administrative. Strawman Dismissal is performed by the court itself in the opinion. One disguises intake fraud. The other disguises judicial fraud.</p>
+
+    <h3>The Immunity Shield Reversal</h3>
+    <p>Judicial immunity is applied before jurisdiction is established — reversing the required order of analysis. Jurisdiction must be established before immunity can attach. Immunity only protects judicial acts. An act performed without jurisdiction is not a judicial act.</p>
+    <div class="ladder">Correct order:
+Jurisdiction established → immunity analysis applies
+
+Fraud order:
+Immunity applied first → jurisdiction question never reached
+→ jurisdictional void permanently buried
+→ underlying criminal exposure permanently hidden</div>
+    <p>When a court applies immunity analysis before addressing jurisdiction, it is not making a neutral legal determination. It is using procedural doctrine as a shield for the fraud it was asked to examine.</p>
+
+    <h3>The Representation Trap as Enterprise Defense</h3>
+    <p>"Get a lawyer" is the enterprise's most effective first-line defense. An attorney operating within the same professional network as the enterprise's actors has structural incentives that conflict with the client's constitutional interest. The attorney practices before the same judges repeatedly. Their professional relationships with opposing counsel predate and will outlast any single client. Their bar license is administered by an association composed of the same network.</p>
+    <p>An attorney who files the void ab initio argument aggressively, names every enterprise actor as individually liable, and pursues RICO through completion will win for the client or destroy their own professional relationships trying. Most choose their professional relationships. This is not individual corruption. It is structural capture.</p>
+    <div class="plain-block">
+      <div class="plain-label">Plain English</div>
+      <div class="plain-body">They tell you to get someone who knows the system to speak for you. The system is what you're challenging. The person who knows the system best has the most to lose by challenging it. That is not your advocate. That is the enterprise's last line of defense wearing your attorney's costume.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PART TWO: PEONAGE AND FORCED LABOR -->
+<section class="doc-section" id="sec-peonage">
+  <div class="section-header" onclick="toggleSection('sec-peonage')">
+    <div class="section-meta">
+      <div class="section-num">Part Two</div>
+      <div class="section-title">Peonage and Forced Labor</div>
+      <div class="section-sub">The oldest crime in the framework. Criminalized in 1867.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-peonage">+</div>
+  </div>
+  <div class="section-body" id="body-sec-peonage">
+    <p class="lead">Peonage was criminalized in 1867. The 13th Amendment abolished involuntary servitude in 1865. The IV-D enforcement mechanism has been criminally prohibited for over 150 years. It rebuilt what those statutes dismantled — using paperwork instead of chains, robes instead of overseers, and federal funding instead of plantation economics.</p>
+
+    <div class="statute-block">
+      <div class="statute-name">18 U.S.C. § 1581 — Peonage</div>
+      <div class="statute-plain">Holding a human in debt servitude through threat of legal process.</div>
+      <div class="statute-elements">A void support obligation enforced through contempt proceedings and the threat of incarceration is the statutory definition of peonage. The debt is void. The threat is real. The combination is the crime.</div>
+    </div>
+
+    <div class="statute-block">
+      <div class="statute-name">18 U.S.C. § 1583 — Enticement into Slavery</div>
+      <div class="statute-plain">Inducing a human into involuntary servitude through fraud.</div>
+      <div class="statute-elements">A proceeding entered on the false premise that it was legally necessary — when the constitutional rights it purported to "establish" already existed — is enticement by fraud. The human was induced into legal servitude through a misrepresentation about the nature and necessity of the proceeding itself.</div>
+    </div>
+
+    <div class="statute-block">
+      <div class="statute-name">18 U.S.C. § 1584 — Involuntary Servitude</div>
+      <div class="statute-plain">Holding a human to labor against their will through threat or abuse of legal process.</div>
+      <div class="statute-elements">Every contempt proceeding brought to enforce a void support obligation is a § 1584 enforcement action. The instrument is void. The threat is the mechanism. The combination is the crime.</div>
+    </div>
+
+    <div class="statute-block">
+      <div class="statute-name">18 U.S.C. § 1589 — Forced Labor</div>
+      <div class="statute-plain">Obtaining labor through abuse of legal process or threat of serious harm.</div>
+      <div class="statute-elements">The contempt mechanism — pay or be jailed — is the textbook definition of § 1589 abuse of legal process. Pay the void obligation or lose your liberty. That is forced labor. That is a federal crime.</div>
+    </div>
+
+    <div class="plain-block">
+      <div class="plain-label">Plain English</div>
+      <div class="plain-body">A court instrument you were never legally required to follow, enforced by the threat of jail — that is not justice. That is slavery with paperwork. The paperwork being generated by a government agency does not change what it is.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PART THREE: RICO -->
+<section class="doc-section" id="sec-rico">
+  <div class="section-header" onclick="toggleSection('sec-rico')">
+    <div class="section-meta">
+      <div class="section-num">Part Three</div>
+      <div class="section-title">RICO — The Enterprise</div>
+      <div class="section-sub">Organized crime with government credentials.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-rico">+</div>
+  </div>
+  <div class="section-body" id="body-sec-rico">
+    <p class="lead">RICO — 18 U.S.C. §§ 1961–1964 — was built for exactly this situation. Multiple actors, coordinated conduct, sustained over time, structured to generate profit while insulating participants from individual accountability.</p>
+
+    <h3>The Four Elements</h3>
+    <ol>
+      <li>An enterprise exists</li>
+      <li>The enterprise affects interstate commerce</li>
+      <li>The defendant is associated with the enterprise</li>
+      <li>The defendant conducted or participated in the enterprise through a pattern of racketeering activity</li>
+    </ol>
+
+    <h3>The Enterprise</h3>
+    <p>The network of county CSEAs, JFS offices, family court officials, and enforcement agencies operating under the Title IV-D incentive structure constitutes the enterprise. Multi-county coordination establishes the enterprise across jurisdictions. The enterprise is not defined by geography. It is defined by structure, shared financial incentive, and coordinated conduct.</p>
+    <p>Interstate commerce nexus: Federal funding under 45 C.F.R. § 305 is the interstate commerce connection. Every incentive payment from HHS to an Ohio CSEA is a federal financial transaction crossing state lines. RICO's interstate commerce requirement is satisfied by the federal funding structure itself.</p>
+
+    <h3>The Predicate Acts</h3>
+    <table class="matrix-table">
+      <tr><th>Predicate Act</th><th>Statute</th><th>Evidence Type</th></tr>
+      <tr><td>Mail fraud — void instruments mailed to parties</td><td><span class="cite">§ 1341</span></td><td>Certificate of service records, postmarked envelopes</td></tr>
+      <tr><td>Wire fraud — electronic filings with false certifications</td><td><span class="cite">§ 1343</span></td><td>Electronic docket entries, timestamps</td></tr>
+      <tr><td>Honest services fraud — officials serving undisclosed financial interest</td><td><span class="cite">§ 1346</span></td><td>Absence of Tumey disclosure + IV-D payment records</td></tr>
+      <tr><td>Money laundering — void-instrument proceeds through agency accounts</td><td><span class="cite">§ 1956</span></td><td>CSEA payment processing records + federal reimbursement claims</td></tr>
+      <tr><td>Forced labor — contempt on void obligations</td><td><span class="cite">§ 1589</span></td><td>Contempt filings + void instrument documentation</td></tr>
+      <tr><td>Deprivation of rights under color of law</td><td><span class="cite">§ 242</span></td><td>Federal complaint record + instrument void analysis</td></tr>
+      <tr><td>Obstruction of justice</td><td><span class="cite">§ 1503</span></td><td>Bench warrant dates vs. federal filing dates</td></tr>
+      <tr><td>Witness retaliation</td><td><span class="cite">§ 1513</span></td><td>CSPO filing date vs. candidacy announcement date — one day</td></tr>
+    </table>
+
+    <h3>Procedural Laundering</h3>
+    <p>When Claim Conversion and Standard Misapplication are used together across multiple courts and multiple counties producing identical outcomes for a single litigant — that is not judicial error. That is a documented pattern of knowing deprivation of constitutional rights under color of law.</p>
+    <p>Distinguished from error: Error is random. Procedural Laundering produces consistent outcomes across independent venues. One actor using a playbook is a tactic. Two levels of the same system using the identical playbook on the same facts is the enterprise demonstrating its reach.</p>
+
+    <h3>Civil RICO — The Private Action</h3>
+    <p>18 U.S.C. § 1964(c) provides a private civil RICO action to any human injured by reason of a RICO violation. Treble damages. Attorney's fees. This is available to every human the enterprise harmed — not only federal prosecutors. The same pattern of predicate acts that supports criminal prosecution supports a private civil RICO claim for three times the documented damages.</p>
+
+    <div class="plain-block">
+      <div class="plain-label">Plain English</div>
+      <div class="plain-body">RICO was built for organized crime. When multiple government offices coordinate across county lines to extract money from families using void instruments, federal funding, and shared financial incentives — that is organized crime. The robes and badges change the costume. They do not change the conduct.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PART FOUR: HONEST SERVICES FRAUD -->
+<section class="doc-section" id="sec-honest">
+  <div class="section-header" onclick="toggleSection('sec-honest')">
+    <div class="section-meta">
+      <div class="section-num">Part Four</div>
+      <div class="section-title">Honest Services Fraud</div>
+      <div class="section-sub">The duty that was never honored.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-honest">+</div>
+  </div>
+  <div class="section-body" id="body-sec-honest">
+    <p>18 U.S.C. § 1346 defines "scheme or artifice to defraud" to include any scheme to deprive another of the intangible right of honest services. Every official has a duty of honest services to the humans they serve. Using official authority to advance an undisclosed financial interest is a federal crime.</p>
+    <p>Every IV-D official who processed, adjudicated, or enforced in a case where the Tumey conflict was never disclosed was using their official position to serve a financial interest that the human before them never knew existed. That concealed self-dealing — under color of official authority — is the statutory definition of honest services fraud.</p>
+
+    <h3>Mail and Wire Fraud as Predicate Acts</h3>
+    <p>Section 1346 operates with § 1341 (mail fraud) and § 1343 (wire fraud). Every instrument mailed in a IV-D case is a mailing in furtherance of a scheme to deprive honest services. Every electronic filing is a wire transmission in furtherance of the same scheme. Each mailing or transmission is a separate count. Thirteen years of mailings and electronic filings is thirteen years of predicate acts.</p>
+    <p>Skilling v. United States, 561 U.S. 358 (2010), confirmed that honest services fraud requires undisclosed self-dealing. The IV-D conflict is not a judgment call. It is a structural financial interest embedded in federal regulation and never disclosed. That is undisclosed self-dealing by the statutory definition.</p>
+
+    <div class="plain-block">
+      <div class="plain-label">Plain English</div>
+      <div class="plain-body">You hired a financial advisor. They made decisions that made themselves money without telling you. That's fraud. When an official makes decisions that generate federal payments for their agency without telling you — that is the same crime in a robe.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PART FIVE: RETALIATION AND OBSTRUCTION -->
+<section class="doc-section" id="sec-retaliation">
+  <div class="section-header" onclick="toggleSection('sec-retaliation')">
+    <div class="section-meta">
+      <div class="section-num">Part Five</div>
+      <div class="section-title">Retaliation and Obstruction</div>
+      <div class="section-sub">What happens after you file.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-retaliation">+</div>
+  </div>
+  <div class="section-body" id="body-sec-retaliation">
+    <p class="lead">After federal complaints are filed and served, every adverse action taken against the plaintiff is subject to separate criminal analysis. The prior conduct created civil and criminal liability. The post-filing conduct creates additional criminal liability — and tends to be documented with greater precision because the plaintiff knows to watch for it.</p>
+
+    <div class="statute-block">
+      <div class="statute-name">18 U.S.C. § 1503 — Obstruction of Justice</div>
+      <div class="statute-plain">Influencing or impeding any party in a pending federal proceeding.</div>
+      <div class="statute-elements">A bench warrant issued while federal cases are pending, a contempt proceeding initiated against a federal plaintiff, a CSPO filed against a federal plaintiff while federal defendants are named — each is subject to § 1503 analysis. Any state action that impedes the federal proceeding is obstruction.</div>
+    </div>
+
+    <div class="statute-block">
+      <div class="statute-name">18 U.S.C. § 1512 — Witness Tampering</div>
+      <div class="statute-plain">Intimidating or corruptly persuading a witness in a federal proceeding.</div>
+      <div class="statute-elements">Every adverse action taken against a federal plaintiff after complaints are filed — enforcement actions, financial pressure through support enforcement, isolation through CSPO communications restrictions — is subject to § 1512 analysis.</div>
+    </div>
+
+    <div class="statute-block">
+      <div class="statute-name">18 U.S.C. § 1513 — Witness Retaliation</div>
+      <div class="statute-plain">Taking adverse action against a human for filing a federal complaint.</div>
+      <div class="statute-elements">CSPO filed December 23, 2025 — one day after the December 22 gubernatorial candidacy announcement establishing the federal complaint activity publicly. One day between protected activity and adverse action. Two instances of adverse action within days of federal filings establishes the pattern. Two instances is not coincidence twice. It is the enterprise demonstrating its retaliation mechanism.</div>
+    </div>
+
+    <h3>The Timing Correlation Standard</h3>
+    <p>Retaliation does not require a written admission of motive. Temporal proximity between protected activity and adverse action creates the inference. The closer the timing, the stronger the inference. Courts have found retaliation on far less than one day.</p>
+    <p>Map every adverse action against your federal filing timeline. One adverse action = possible coincidence. Two = pattern. Three = system.</p>
+
+    <div class="plain-block">
+      <div class="plain-label">Plain English</div>
+      <div class="plain-body">When you file a federal complaint against an official, and the next day that official's associate files a protective instrument against you — that is not coincidence. When law enforcement then executes that instrument knowing the underlying proceedings are void — they are not enforcing law. They are enforcing crime.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PART SIX: COMMAND RESPONSIBILITY -->
+<section class="doc-section" id="sec-command">
+  <div class="section-header" onclick="toggleSection('sec-command')">
+    <div class="section-meta">
+      <div class="section-num">Part Six</div>
+      <div class="section-title">Command Responsibility</div>
+      <div class="section-sub">The commander is responsible for what they authorize.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-command">+</div>
+  </div>
+  <div class="section-body" id="body-sec-command">
+    <p>Command responsibility doctrine establishes that a supervising official is legally responsible for the actions of subordinates when: (1) the commander knew or should have known of unlawful conduct, (2) the commander had authority to prevent or punish it, (3) the commander failed to act.</p>
+    <p>Service of federal complaints on agency heads constitutes constructive notice of unlawful conduct by subordinates. Every enforcement action taken by subordinates after that service date is conducted with the commander's constructive knowledge. The commander who does not stop the conduct after notice has made a choice. That choice is documented in the record.</p>
+
+    <h4>CSEA Director Liability</h4>
+    <p>A CSEA director who continues collection activity after receiving the jurisdictional challenge notice has authorized continued knowing violation of clearly established law. No qualified immunity. Personal liability under § 1983 and § 242.</p>
+
+    <h4>Sheriff Liability</h4>
+    <p>A sheriff whose deputies execute instruments in matters where the issuing officials are named federal defendants — after service of federal complaints documenting the void jurisdictional foundation — has authorized retaliation through law enforcement resources. The sheriff does not have to pull the instrument himself. The badge on the deputy is the sheriff's act.</p>
+
+    <div class="plain-block">
+      <div class="plain-label">Plain English</div>
+      <div class="plain-body">The commander doesn't have to be at the scene. When they send personnel to act on void instruments against federal plaintiffs, knowing the instruments are void and the plaintiffs are active federal litigants — the commander has committed the same crime. Authority flows up. So does liability.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PART SEVEN: NOTICE -->
+<section class="doc-section" id="sec-notice">
+  <div class="section-header" onclick="toggleSection('sec-notice')">
+    <div class="section-meta">
+      <div class="section-num">Part Seven</div>
+      <div class="section-title">The Notice That Activates Everything</div>
+      <div class="section-sub">How filing permanently changes every official's exposure.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-notice">+</div>
+  </div>
+  <div class="section-body" id="body-sec-notice">
+    <p class="lead">Before documented notice, an official retains the theoretical argument that they were unaware the specific conduct was constitutionally prohibited. After documented notice — that argument is permanently unavailable.</p>
+    <p>Notice converts potential willfulness into documented willfulness. Every act taken after notice is a choice made with knowledge. Federal criminal law treats informed choices to violate constitutional rights as crimes. Not errors. Not discretionary decisions. Crimes.</p>
+
+    <div class="escalation">The Escalation Sequence
+
+Template 0 served
+→ Tumey conflict noticed
+→ 30-day response deadline
+→ Silence = evidence of coordination
+→ Continued collection = § 1589 willful forced labor
+
+Template 5 served
+→ Law enforcement noticed
+→ Continued execution = § 242 willful color of law violation
+→ Command that authorized = § 242 command liability
+
+Federal complaint filed
+→ All named actors on notice
+→ Continued adverse action = § 1513 witness retaliation
+→ Continued enterprise coordination = RICO predicate act
+
+RTF4 served
+→ Criminal prosecution map delivered
+→ Continued coordination = § 371 overt act in furtherance of conspiracy
+→ Oversight refusal to act = § 4 misprision of felony</div>
+
+    <h3>Oversight Refusal as RICO Participation</h3>
+    <p>Any oversight body that receives documented evidence of § 242 violations and declines to act has made a choice. That choice, made with knowledge of the underlying crimes, in a pattern of non-prosecution consistent with other oversight bodies' non-response, is not administrative discretion. It is a choice that enables the enterprise to continue.</p>
+    <p>When the pattern of non-prosecution across multiple agencies is itself coordinated — when every oversight channel receives the same documentation and none of them act — the pattern of non-response is the RICO coordination evidence.</p>
+
+    <h3>Physical Compliance — Verbal Notice</h3>
+    <p>If law enforcement arrives to execute an instrument you know to be void:</p>
+    <div class="ladder">Comply physically. Do not resist. Do not make physical contact.
+
+State clearly, for any recording device:
+"I am complying under duress and under protest.
+I do not consent.
+The instruments you are executing are void ab initio
+for lack of jurisdiction.
+The individuals who generated these instruments are
+named defendants in pending federal litigation.
+I am not resisting. I am documenting."
+
+Then comply. Document everything immediately after.</div>
+    <p>Physical resistance ends the case. Verbal notice on the record converts their physical action into a documented federal crime. One of those outcomes keeps your case alive. The other ends it.</p>
+    <p><strong>Stay alive. Stay documented. Stay filing.</strong></p>
+  </div>
+</section>
+
+<!-- PROSECUTION MATRIX -->
+<section class="doc-section" id="sec-matrix">
+  <div class="section-header" onclick="toggleSection('sec-matrix')">
+    <div class="section-meta">
+      <div class="section-num">Quick Reference</div>
+      <div class="section-title">Prosecution Matrix</div>
+      <div class="section-sub">Conduct → Statute → Key Element → Evidence</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-matrix">+</div>
+  </div>
+  <div class="section-body" id="body-sec-matrix">
+    <div style="overflow-x:auto;">
+    <table class="matrix-table">
+      <tr><th>Conduct</th><th>Statute</th><th>Key Element</th><th>Evidence</th></tr>
+      <tr><td>IV-D enforcement with undisclosed financial interest</td><td><span class="cite">§ 242</span></td><td>Willful, color of law</td><td>45 C.F.R. § 305 + absence of disclosure</td></tr>
+      <tr><td>Contempt on void support obligation</td><td><span class="cite">§ 1581 Peonage</span></td><td>Debt + threat of legal process</td><td>Void instrument + contempt record</td></tr>
+      <tr><td>Continued collection after notice served</td><td><span class="cite">§ 1589 Forced Labor</span></td><td>Abuse of legal process, knowing</td><td>Notice service record + continued enforcement</td></tr>
+      <tr><td>Multi-county IV-D enforcement coordination</td><td><span class="cite">§ 1962 RICO</span></td><td>Enterprise + pattern of predicate acts</td><td>Cross-county filing timeline</td></tr>
+      <tr><td>Officials serving undisclosed financial interest</td><td><span class="cite">§ 1346</span></td><td>Concealed self-dealing</td><td>Absence of Tumey disclosure</td></tr>
+      <tr><td>Void-instrument proceeds through agency accounts</td><td><span class="cite">§ 1956 Money Laundering</span></td><td>Proceeds of unlawful activity + financial transaction</td><td>CSEA payment records + federal reimbursement claims</td></tr>
+      <tr><td>Inflated IV-D collections defrauding federal treasury</td><td><span class="cite">§ 371</span></td><td>Agreement + overt act</td><td>Payment records + void foundation</td></tr>
+      <tr><td>Retaliatory instrument filed after federal activity</td><td><span class="cite">§ 1513</span></td><td>Adverse action + temporal proximity</td><td>Filing dates — one day</td></tr>
+      <tr><td>Bench warrant during pending federal proceeding</td><td><span class="cite">§ 1503</span></td><td>Impediment of federal proceeding</td><td>Case filing dates + warrant date</td></tr>
+      <tr><td>Agency director continuing after notice served</td><td><span class="cite">§ 242 willful</span></td><td>Notice established, continued anyway</td><td>Notice service + continued enforcement</td></tr>
+      <tr><td>Oversight body refusing to act after documented notice</td><td><span class="cite">§ 4 / § 1962</span></td><td>Knowledge + failure to act</td><td>Complaint submission records + non-response pattern</td></tr>
+      <tr><td>Fabricated medical findings in official instruments</td><td><span class="cite">§ 1343 Wire Fraud</span></td><td>Electronic filing with false certification</td><td>Single-page production vs. 13 years of findings</td></tr>
+      <tr><td>Federal benefit garnishment on fraudulent debt</td><td><span class="cite">§ 1956</span></td><td>Processing proceeds of unlawful activity</td><td>SSDI withholding + void arrearage foundation</td></tr>
+      <tr><td>Mental health exam scheduled after document exposure</td><td><span class="cite">§ 1513</span></td><td>Adverse action after protected activity</td><td>Exam letter date vs. production date vs. federal filing dates</td></tr>
+    </table>
+    </div>
+
+    <h3>Case Law Reference</h3>
+    <table class="case-table">
+      <tr><th>Case</th><th>Citation</th><th>Function</th></tr>
+      <tr><td>Bailey v. Alabama</td><td>219 U.S. 219 (1911)</td><td>Peonage prohibition — debt cannot compel labor</td></tr>
+      <tr><td>United States v. Kozminski</td><td>487 U.S. 931 (1988)</td><td>Forced labor — abuse of legal process as coercion</td></tr>
+      <tr><td>Skilling v. United States</td><td>561 U.S. 358 (2010)</td><td>Honest services fraud — undisclosed self-dealing</td></tr>
+      <tr><td>Nieves v. Bartlett</td><td>587 U.S. 391 (2019)</td><td>Retaliatory enforcement — First Amendment protection</td></tr>
+      <tr><td>Hartman v. Moore</td><td>547 U.S. 250 (2006)</td><td>Retaliatory prosecution — causation standard</td></tr>
+      <tr><td>Tumey v. Ohio</td><td>273 U.S. 510 (1927)</td><td>Financial interest voids authority — predicate for all criminal exposure</td></tr>
+      <tr><td>Caperton v. Massey</td><td>556 U.S. 868 (2009)</td><td>Personal interest requires recusal — infinite void foundation</td></tr>
+      <tr><td>Stanley v. Illinois</td><td>405 U.S. 645 (1972)</td><td>Parental rights inherent — statutory default unconstitutional</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- NOTE TO READER -->
+<div style="padding:40px 0;border-top:2px solid var(--black);">
+  <p style="font-family:var(--serif);font-size:18px;color:var(--black);margin-bottom:16px;line-height:1.6;">RTF3 proved the proceedings were void. RTF4 names what the conduct was — criminally — and maps the path from documented act to federal statute to prosecution.</p>
+  <p style="font-size:15px;color:var(--mid);margin-bottom:16px;line-height:1.7;">The map does not prosecute the criminals. That requires federal prosecutors willing to act, or civil plaintiffs willing to file, or both. What this document does is remove every claim of ignorance from every official who receives it — and give every human the enterprise harmed the vocabulary to name what was done to them.</p>
+  <p style="font-size:15px;color:var(--mid);margin-bottom:24px;">The system depends on you not having that vocabulary.</p>
+  <p style="font-size:16px;font-weight:700;color:var(--black);">The fraud only works if you can't read it.<br>You can read it now.</p>
+</div>
+
+<footer>
+  <div class="mottos">
+    "Due Process = Disclosure = Consent."<br>
+    "Remove the costume. Describe the conduct."<br>
+    "The fraud only works if you can't read it."<br>
+    "You can read it now."
+  </div>
+  <div class="footer-meta">
+    RTF4 — Criminal Prosecution Map | Version 1.0 | Published: March 24, 2026<br>
+    Living Document | Educational purposes only. Not legal advice.<br><br>
+    TOLER LEEGAL FOUNDATION &nbsp;·&nbsp; READINGTHEFRAUD.COM &nbsp;·&nbsp; TOLER FOR GOVERNOR
+  </div>
+</footer>
+
+<script>
+  function openSection(id) {
+    var body = document.getElementById('body-' + id);
+    var icon = document.getElementById('icon-' + id);
+    if (!body) return;
+    body.classList.add('open');
+    icon.classList.add('open');
+    icon.textContent = '×';
+    var el = document.getElementById(id);
+    if (el) {
+      setTimeout(function() {
+        var navH = document.getElementById('topnav').offsetHeight;
+        var top = el.getBoundingClientRect().top + window.pageYOffset - navH - 16;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }, 50);
+    }
+  }
+  function toggleSection(id) {
+    var body = document.getElementById('body-' + id);
+    var icon = document.getElementById('icon-' + id);
+    if (!body) return;
+    var isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    icon.classList.toggle('open', !isOpen);
+    icon.textContent = isOpen ? '+' : '×';
+  }
+</script>
+</body>
+</html>
