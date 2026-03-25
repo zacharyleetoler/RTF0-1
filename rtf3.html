@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RTF3 — Void Ab Initio | Reading the Fraud</title>
+<style>
+  :root {
+    --black: #111111;
+    --dark: #222222;
+    --mid: #555555;
+    --light: #999999;
+    --rule: #dddddd;
+    --bg: #ffffff;
+    --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --serif: Georgia, 'Times New Roman', serif;
+    --mono: 'Courier New', Courier, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.75;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+  #topnav {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--rule);
+    padding: 10px 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  #topnav .site-name { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--mid); white-space: nowrap; }
+  #topnav .site-name a { color: var(--mid); text-decoration: none; }
+  #topnav .site-name a:hover { color: var(--black); }
+  #nav-links { display: flex; gap: 16px; flex-wrap: wrap; justify-content: flex-end; }
+  #nav-links a { font-size: 12px; font-family: var(--mono); color: var(--mid); text-decoration: none; letter-spacing: .05em; white-space: nowrap; }
+  #nav-links a:hover { color: var(--black); }
+  #hero { padding: 72px 0 48px; border-bottom: 2px solid var(--black); }
+  .doc-label { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; color: var(--light); text-transform: uppercase; margin-bottom: 16px; }
+  h1 { font-family: var(--serif); font-size: clamp(26px, 5vw, 40px); font-weight: normal; line-height: 1.2; margin-bottom: 10px; }
+  .tagline { font-family: var(--mono); font-size: 13px; color: var(--mid); letter-spacing: .06em; margin-bottom: 28px; }
+  .hero-desc { font-size: 15px; color: var(--mid); max-width: 600px; line-height: 1.7; margin-bottom: 12px; }
+  .series-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+  .series-nav a { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; padding: 6px 12px; border: 1px solid var(--rule); color: var(--mid); text-decoration: none; transition: all .15s; }
+  .series-nav a:hover { border-color: var(--black); color: var(--black); }
+  .series-nav a.current { background: var(--black); color: var(--bg); border-color: var(--black); }
+  .motto-block { padding: 28px 0; border-bottom: 1px solid var(--rule); font-family: var(--serif); font-size: 18px; font-style: italic; color: var(--black); }
+  .motto-attr { font-family: var(--mono); font-size: 11px; font-style: normal; color: var(--light); letter-spacing: .08em; margin-top: 6px; }
+  .what-block { padding: 36px 0; border-bottom: 1px solid var(--rule); }
+  .what-block p { font-size: 15px; color: var(--mid); margin-bottom: 12px; line-height: 1.7; }
+  .what-block p strong { color: var(--black); }
+  .not-block { background: #f8f8f8; border-left: 3px solid var(--rule); padding: 16px 20px; margin: 16px 0; font-size: 14px; color: var(--mid); line-height: 1.7; }
+  .not-block strong { color: var(--black); }
+  .part-header { padding: 48px 0 8px; }
+  .part-num { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; color: var(--light); text-transform: uppercase; margin-bottom: 6px; }
+  .part-title { font-family: var(--serif); font-size: 26px; font-weight: normal; color: var(--black); margin-bottom: 6px; }
+  .part-sub { font-size: 14px; color: var(--mid); font-family: var(--mono); margin-bottom: 20px; }
+  .doc-section { border-bottom: 1px solid var(--rule); }
+  .section-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 32px 0 28px; cursor: pointer; user-select: none; }
+  .section-header:hover .section-title { color: var(--mid); }
+  .section-meta { flex: 1; }
+  .section-num { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--light); text-transform: uppercase; margin-bottom: 6px; }
+  .section-title { font-family: var(--serif); font-size: 22px; font-weight: normal; line-height: 1.3; color: var(--black); transition: color .15s; }
+  .section-sub { font-family: var(--mono); font-size: 12px; color: var(--light); margin-top: 4px; letter-spacing: .05em; }
+  .toggle-icon { font-family: var(--mono); font-size: 20px; color: var(--light); flex-shrink: 0; margin-top: 6px; transition: transform .2s; }
+  .section-body { display: none; padding-bottom: 40px; }
+  .section-body.open { display: block; }
+  .section-body h3 { font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); margin: 36px 0 14px; padding-bottom: 6px; border-bottom: 1px solid var(--rule); }
+  .section-body h4 { font-family: var(--serif); font-size: 17px; font-weight: bold; color: var(--black); margin: 28px 0 10px; }
+  .section-body p { margin-bottom: 16px; color: var(--dark); }
+  .section-body p.lead { font-family: var(--serif); font-size: 19px; line-height: 1.6; color: var(--black); margin-bottom: 24px; }
+  .section-body ul, .section-body ol { margin: 0 0 16px 24px; }
+  .section-body li { margin-bottom: 6px; color: var(--dark); }
+  .ladder { font-family: var(--mono); font-size: 13px; line-height: 2; background: #f8f8f8; border-left: 3px solid var(--black); padding: 20px 24px; margin: 20px 0 24px; color: var(--dark); white-space: pre-wrap; }
+  .pull { font-family: var(--serif); font-size: 20px; line-height: 1.5; color: var(--black); border-top: 2px solid var(--black); border-bottom: 1px solid var(--rule); padding: 20px 0; margin: 32px 0; }
+  .demand { background: #f8f8f8; border: 1px solid var(--rule); padding: 20px 24px; margin: 16px 0 24px; font-size: 15px; font-style: italic; color: var(--dark); line-height: 1.7; }
+  .sentence-block { border-left: 3px solid var(--black); padding: 16px 20px; margin: 16px 0; }
+  .sentence-num { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--light); text-transform: uppercase; margin-bottom: 6px; }
+  .sentence-body { font-size: 15px; color: var(--dark); line-height: 1.7; }
+  .sentence-cite { font-family: var(--mono); font-size: 11px; color: var(--mid); margin-top: 6px; }
+  .void-stack { background: var(--black); color: var(--bg); padding: 24px 28px; margin: 24px 0; font-family: var(--mono); font-size: 13px; line-height: 2.2; }
+  .void-stack .vs-title { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #999; margin-bottom: 12px; }
+  .response-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 20px 0 28px; }
+  .response-table th { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); border-bottom: 1px solid var(--rule); padding: 8px 12px 8px 0; text-align: left; }
+  .response-table td { padding: 10px 12px 10px 0; vertical-align: top; border-bottom: 1px solid #f0f0f0; color: var(--dark); line-height: 1.6; font-size: 14px; }
+  .response-table td:first-child { font-weight: 600; color: var(--black); width: 40%; }
+  .case-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 20px 0; }
+  .case-table th { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); border-bottom: 2px solid var(--black); padding: 8px 12px 8px 0; text-align: left; }
+  .case-table td { padding: 10px 12px 10px 0; vertical-align: top; border-bottom: 1px solid #f0f0f0; color: var(--dark); line-height: 1.5; }
+  .case-table td:first-child { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--black); white-space: nowrap; padding-right: 20px; }
+  .conclusion-block { background: var(--black); color: var(--bg); padding: 20px 24px; margin: 24px 0; font-family: var(--serif); font-size: 16px; line-height: 1.7; }
+  footer { padding: 48px 0 24px; border-top: 1px solid var(--rule); margin-top: 48px; }
+  .mottos { font-family: var(--mono); font-size: 12px; color: var(--black); line-height: 2.4; margin-bottom: 24px; }
+  .footer-meta { font-family: var(--mono); font-size: 11px; color: var(--light); letter-spacing: .06em; line-height: 2; }
+  @media(max-width:600px) {
+    body { font-size: 16px; padding: 0 16px 60px; }
+    h1 { font-size: 24px; }
+    #nav-links { display: none; }
+    .ladder { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="topnav">
+  <span class="site-name"><a href="index.html">READINGTHEFRAUD.COM</a></span>
+  <div id="nav-links">
+    <a href="index.html">RTF0</a>
+    <a href="rtf1.html">RTF1</a>
+    <a href="rtf2.html">RTF2</a>
+    <a href="rtf3.html">RTF3</a>
+    <a href="rtf4.html">RTF4</a>
+  </div>
+</nav>
+
+<header id="hero">
+  <div class="doc-label">Reading the Fraud — Document Series</div>
+  <h1>RTF3 — Void Ab Initio</h1>
+  <p class="tagline">The 45 C.F.R. § 305 Jurisdictional Framework</p>
+  <p class="hero-desc">Why every IV-D child support proceeding built on an undisclosed financial conflict is void from the beginning. Not voidable. Not appealable. <strong>Void — as though it never existed.</strong></p>
+  <p class="hero-desc">Three documents make the complete argument. Everything else is documentation.</p>
+  <div class="series-nav">
+    <a href="index.html">RTF0 — Foundation</a>
+    <a href="rtf1.html">RTF1 — Checklist</a>
+    <a href="rtf2.html">RTF2 — Legal Map</a>
+    <a class="current" href="rtf3.html">RTF3 — Void Ab Initio</a>
+    <a href="rtf4.html">RTF4 — Criminal Map</a>
+  </div>
+</header>
+
+<div class="motto-block">
+  The 14th Amendment does not require paperwork. It requires that a person be informed before their rights are altered. Informed = consented. Uninformed = not consented. Proceeding without consent = void.
+  <div class="motto-attr">— Zachary L. Toler</div>
+</div>
+
+<div class="what-block">
+  <p><strong>What this document is:</strong> Three documents make every IV-D child support proceeding void ab initio. Not voidable. Not appealable. Void — as though it never existed. Those three documents are: 45 C.F.R. § 305, Tumey v. Ohio (1927), and the absence of a disclosure form.</p>
+  <p>The first proves a financial conflict exists by federal law. The second proves that financial conflict voids adjudicatory authority. The third proves the conflict was never disclosed — and therefore never cured.</p>
+  <p>This document is not a challenge to specific hearing errors. It is not an appeal. It is a demonstration that jurisdiction was never constitutionally established — making every order, every obligation, and every enforcement action void from the beginning.</p>
+  <div class="not-block">
+    <strong>What this document is not:</strong> Sovereign citizen theory. Anti-government extremism. An attack on the concept of child support. Children deserve financial support from both parents. This document is about who has lawful authority to administer that support — and what happens when agencies without that authority perform as though they have it.
+  </div>
+  <p><strong>The plain English version in one sentence:</strong> They had a financial stake in the outcome of your case, they never told you, and that makes everything they did legally null.</p>
+</div>
+
+<!-- PART ONE: EIGHT SENTENCES -->
+<section class="doc-section" id="sec-eight">
+  <div class="section-header" onclick="toggleSection('sec-eight')">
+    <div class="section-meta">
+      <div class="section-num">Part One</div>
+      <div class="section-title">The Eight-Sentence Argument</div>
+      <div class="section-sub">The complete argument. Everything else is documentation.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-eight">+</div>
+  </div>
+  <div class="section-body" id="body-sec-eight">
+    <p class="lead">The complete argument fits in eight sentences. Everything that follows is documentation.</p>
+
+    <div class="sentence-block">
+      <div class="sentence-num">Sentence One</div>
+      <div class="sentence-body">Ohio accepts Title IV-D federal funding. By accepting that funding, Ohio and its counties operate under 45 C.F.R. § 305, which establishes a direct financial incentive structure tying agency compensation to child support collection performance.</div>
+      <div class="sentence-cite">45 C.F.R. § 305 — 42 U.S.C. § 651 et seq.</div>
+    </div>
+
+    <div class="sentence-block">
+      <div class="sentence-num">Sentence Two</div>
+      <div class="sentence-body">The county Child Support Enforcement Agency administering your case had a financial interest in the outcome. The more they collected, the more federal money flowed to them. That is the definition of a financial stake in the result.</div>
+      <div class="sentence-cite">45 C.F.R. § 305 — Performance incentive formula</div>
+    </div>
+
+    <div class="sentence-block">
+      <div class="sentence-num">Sentence Three</div>
+      <div class="sentence-body">In Tumey v. Ohio, 273 U.S. 510 (1927), the United States Supreme Court held that a judicial or quasi-judicial officer with a financial interest in the outcome of a proceeding lacks the constitutional authority to adjudicate that proceeding. The interest voids the authority — not just the result. The authority.</div>
+      <div class="sentence-cite">Tumey v. Ohio, 273 U.S. 510 (1927)</div>
+    </div>
+
+    <div class="sentence-block">
+      <div class="sentence-num">Sentence Four</div>
+      <div class="sentence-body">In Gibson v. Berryhill, 411 U.S. 564 (1973), the Supreme Court confirmed that when an adjudicating body lacks neutrality due to financial interest, the instruments it produces are void — not merely voidable. There is no appeal of a void instrument. There is only identification of it as void.</div>
+      <div class="sentence-cite">Gibson v. Berryhill, 411 U.S. 564 (1973)</div>
+    </div>
+
+    <div class="sentence-block">
+      <div class="sentence-num">Sentence Five</div>
+      <div class="sentence-body">The 45 C.F.R. § 305 financial interest was never disclosed to the parties in the proceeding. No form exists. No signed acknowledgment exists. No record of disclosure exists anywhere in the case file.</div>
+      <div class="sentence-cite">Absence of required document = fraud made visible</div>
+    </div>
+
+    <div class="sentence-block">
+      <div class="sentence-num">Sentence Six</div>
+      <div class="sentence-body">Under Fuentes v. Shevin, 407 U.S. 67 (1972), and D.H. Overmyer Co. v. Frick, 405 U.S. 174 (1972), waiver of constitutional rights requires knowing and voluntary consent. Consent cannot be knowing when the structural conflict driving the proceeding was never disclosed. There was no valid waiver. There could not have been.</div>
+      <div class="sentence-cite">Fuentes v. Shevin, 407 U.S. 67 (1972) — D.H. Overmyer Co. v. Frick, 405 U.S. 174 (1972)</div>
+    </div>
+
+    <div class="sentence-block">
+      <div class="sentence-num">Sentence Seven</div>
+      <div class="sentence-body">The constitutional predicate for state authority over any person in any proceeding is due process — notice, hearing, and disclosure of structural conflicts. Consent is the predicate. When the disclosure was omitted, the consent was never possible. The constitutional predicate was never satisfied. The authority never attached.</div>
+      <div class="sentence-cite">U.S. Const. amend. XIV — Due Process Clause</div>
+    </div>
+
+    <div class="sentence-block">
+      <div class="sentence-num">Sentence Eight</div>
+      <div class="sentence-body">Every instrument, every obligation, every enforcement action, and every dollar collected under that void authority is void from inception. Not from the date of challenge. From the beginning.</div>
+      <div class="sentence-cite">Void ab initio — Gibson v. Berryhill</div>
+    </div>
+
+    <div class="conclusion-block">
+      Three documents. Complete argument.<br>
+      45 C.F.R. § 305 + Tumey v. Ohio + Absence of Disclosure Form.<br>
+      Every IV-D proceeding built on this foundation is void from inception.
+    </div>
+  </div>
+</section>
+
+<!-- PART TWO: THE DISCLOSURE -->
+<section class="doc-section" id="sec-disclosure">
+  <div class="section-header" onclick="toggleSection('sec-disclosure')">
+    <div class="section-meta">
+      <div class="section-num">Part Two</div>
+      <div class="section-title">The Disclosure That Doesn't Exist</div>
+      <div class="section-sub">What should have been provided. Why it never was.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-disclosure">+</div>
+  </div>
+  <div class="section-body" id="body-sec-disclosure">
+    <h3>What A Proper Disclosure Would Have Said</h3>
+    <div class="demand">
+      "Notice: The Child Support Enforcement Agency administering this proceeding receives federal funding under Title IV-D of the Social Security Act (42 U.S.C. § 651 et seq.). Under 45 C.F.R. § 305, this agency receives financial incentives tied to its child support collection performance, including the amount of support ordered and collected in cases it administers. This means the agency has a financial interest in the outcome of your case. You have the right to be aware of this conflict before proceeding. Your signature below indicates you have been informed of this interest and consent to this agency's participation in your case notwithstanding."
+    </div>
+    <p>That form does not exist. It has never existed. It cannot exist — because full disclosure would require every participant to acknowledge the conflict, and acknowledgment of the conflict would destroy the system that requires it.</p>
+
+    <h3>The Master Request</h3>
+    <p>This is the one request that closes every option:</p>
+    <div class="demand">"Please produce the written disclosure of the 45 C.F.R. § 305 financial interest provided to me at the initiation of this case, and my signed acknowledgment of that disclosure."</div>
+    <p>There are five possible responses. None restore jurisdiction.</p>
+    <table class="response-table">
+      <tr><th>Their Response</th><th>What It Means</th></tr>
+      <tr><td>"Here is the disclosure form you signed."</td><td>Produces a document subject to authentication and dating verification. Examine it. Verify the signature. Verify the date precedes the first proceeding.</td></tr>
+      <tr><td>"No such disclosure was required."</td><td>Confirms the Tumey violation was knowing and systematic. Qualified immunity eliminated. Personal liability confirmed.</td></tr>
+      <tr><td>"That information is not available."</td><td>Confirms absence of required document. Fraud made visible. Federal record entry.</td></tr>
+      <tr><td>Silence / no response.</td><td>Document the date. Silence is admission. Pattern of non-response across agencies is coordination evidence.</td></tr>
+      <tr><td>"This challenge is procedurally improper."</td><td>Deflection. Jurisdiction is never procedurally improper. The objection to the question is the answer to the question.</td></tr>
+    </table>
+
+    <h3>Why The Form Doesn't Exist</h3>
+    <p>Tumey was decided in 1927. Title IV-D was enacted in 1975. Every official who has administered IV-D proceedings since was presumed to know Tumey — it predates every living practitioner. The decision not to create a disclosure form was not an oversight. It was a design choice.</p>
+    <div class="pull">The disclosure form cannot exist without destroying the system that requires it.</div>
+
+    <h3>Fabricated Legal Authority</h3>
+    <p>A related form of the same fraud: Judgment Entries that cite case law that does not support the proposition for which it is cited. A citation that does not stand for what it is claimed to stand for is not legal authority. It is the manufactured appearance of legal authority placed into an official record.</p>
+    <p>This is not judicial error. Judicial error is citing the right law and applying it incorrectly. Citing inapplicable law to reach a predetermined outcome is fabrication. When you find a case citation in a Judgment Entry that does not say what the entry claims it says — you have found the moment the official stopped performing their role and started performing a crime.</p>
+  </div>
+</section>
+
+<!-- PART THREE: STATUTORY DEFAULT -->
+<section class="doc-section" id="sec-statutory">
+  <div class="section-header" onclick="toggleSection('sec-statutory')">
+    <div class="section-meta">
+      <div class="section-num">Part Three</div>
+      <div class="section-title">The Statutory Default</div>
+      <div class="section-sub">The broken link that existed before the case opened.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-statutory">+</div>
+  </div>
+  <div class="section-body" id="body-sec-statutory">
+    <h3>Father Terminology — Not Interchangeable</h3>
+    <p>Courts use these terms interchangeably to obscure whether legal paternity was ever properly established. They are not the same. The distinction determines whether jurisdiction ever attached.</p>
+    <ul>
+      <li><strong>Biological Father</strong> — The man whose DNA produced the child. No legal rights or obligations attach from biology alone.</li>
+      <li><strong>Natural Father</strong> — Older legal term implying biological connection but not legal status. Being phased out.</li>
+      <li><strong>Legal Father</strong> — The man recognized by law, with full rights AND obligations. Established by marriage at birth, signing the birth certificate (R.C. 3111.25), court adjudication, or adoption.</li>
+      <li><strong>Putative Father</strong> — Alleged biological father whose legal paternity has not been established.</li>
+      <li><strong>Presumed Father</strong> — Presumed by law — usually the husband at time of birth. Can be rebutted.</li>
+    </ul>
+    <p>When a court proceeds against a man as the Legal Father — imposing full obligations — without ever establishing legal paternity, it is applying obligations that never attached. The biological connection does not create the legal obligation. Skipping the establishment step is the paternity prerequisite void.</p>
+
+    <h3>R.C. 3109.042 — Unconstitutional From Inception</h3>
+    <p>Ohio R.C. 3109.042 strips the unmarried father's parental rights by default at birth — automatically, without any proceeding, without any finding, without any due process. Not because he did anything wrong. By default. From birth.</p>
+    <p>In Stanley v. Illinois, 405 U.S. 645 (1972), the Supreme Court held that parental rights are not state-granted. They are inherent — existing as a matter of constitutional law prior to any state recognition. The state cannot eliminate them by statute without due process. R.C. 3109.042 does exactly what Stanley prohibits. It has been unconstitutional since before it was enacted — Stanley predates the IV-D statute by three years.</p>
+
+    <h3>The Birth Certificate Point</h3>
+    <p>Ohio R.C. 3111.25 provides that a father's signature on a child's birth certificate constitutes legal establishment of paternity — legally equivalent to a court-ordered paternity finding. Not an acknowledgment pending court confirmation. Establishment.</p>
+    <p>A court proceeding after a signed birth certificate is either redundant — jurisdiction was not needed for what was already done — or fraud — proceeding as though a legally valid document didn't exist in order to generate a IV-D billing event. Either way, the proceeding lacked legitimate basis. The IV-D money generated from it was obtained under false pretenses or for a service already performed without the court's involvement.</p>
+    <p>The attorney who advised petitioning the court to "establish" rights either didn't know R.C. 3111.25 — malpractice — or knew it and sent their client into a IV-D proceeding anyway — participation in the fraud.</p>
+
+    <h3>The Required Sequence — Never Followed</h3>
+    <div class="ladder">Before R.C. 3109.042 can even attempt its unconstitutional operation:
+
+Step 1 — Identify the father (paternity establishment)
+Step 2 — Strip his rights by default (3109.042 — itself unconstitutional under Stanley)
+Step 3 — Court proceeding to restore them
+
+When Step 1 is skipped:
+— The statute never attached
+— The proceeding has no identified subject
+— Every IV-D payment generated is extracted from a person
+  whose identity as legal father was assumed, not established
+— The obligation never attached
+— The jurisdiction never attached</div>
+
+    <h3>The False Premise Diagram</h3>
+    <div class="ladder">Father has constitutional parental rights (Stanley v. Illinois)
+↓
+False premise presented: "You must establish your rights in court"
+↓
+Father consents to proceeding based on false premise
+↓
+Consent based on false premise = void consent
+↓
+Void consent = void jurisdiction
+↓
+Void jurisdiction = void proceeding
+↓
+Void proceeding = void instruments
+↓
+IV-D billing events generated on void foundation</div>
+
+    <h3>The Plain English Resolution</h3>
+    <p>When a parent who participated in the fraud received funding delegated by the court and made false statements to maintain that funding — the resolution follows constitutional law directly:</p>
+    <div class="conclusion-block">
+      Parent made false statements → criminal prosecution.<br>
+      Criminal conduct = costume, not parent.<br>
+      The other parent gets custody.<br>
+      The dockets are the evidence. No deep investigation needed.<br>
+      It's right there.
+    </div>
+  </div>
+</section>
+
+<!-- PART FOUR: REVENUE ARCHITECTURE -->
+<section class="doc-section" id="sec-revenue">
+  <div class="section-header" onclick="toggleSection('sec-revenue')">
+    <div class="section-meta">
+      <div class="section-num">Part Four</div>
+      <div class="section-title">The Revenue Architecture</div>
+      <div class="section-sub">What the system actually is.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-revenue">+</div>
+  </div>
+  <div class="section-body" id="body-sec-revenue">
+    <div class="ladder">R.C. 3109.042: Strip unmarried father's rights by default
+↓
+Father must petition to restore constitutional rights he already had
+↓
+Petition opens IV-D case
+↓
+IV-D case generates:
+  — paternity establishment payment
+  — support order establishment payment
+  — collection performance incentives
+  — arrearage processing fees
+  — enforcement action reimbursements
+↓
+Each dollar collected generates additional federal matching funds
+↓
+Each enforcement action generates additional federal reimbursements
+↓
+Separation maintained = revenue stream maintained
+↓
+Reunification = revenue stream terminated</div>
+
+    <div class="pull">The system doesn't need you destroyed.<br>It needs you depleted but functional enough to keep paying.</div>
+
+    <h3>The Formula</h3>
+    <p>Child = revenue instrument. Separation = revenue mechanism. Court = revenue enterprise. Father = revenue source. Agency = revenue beneficiary. Federal government = revenue provider and, by operation of the fraud, victim of it.</p>
+    <p>Every dollar collected under void instruments is a proceed of unlawful activity. When those proceeds are processed through state agency accounts and transmitted to federal reimbursement claims, the processing is not administrative function — it is the laundering transaction.</p>
+
+    <h3>The DNA Deflection as Knowing Participation</h3>
+    <p>A DNA test threatened the jurisdictional premise regardless of outcome.</p>
+    <div class="ladder">DNA confirms paternity
+→ Birth certificate already established it under R.C. 3111.25
+→ Court's "establishment" was redundant
+→ Redundant proceeding = no legitimate jurisdiction
+→ Revenue stream collapses
+
+DNA disproves paternity
+→ No paternity = no jurisdiction = no support = no IV-D revenue
+→ Revenue stream collapses
+
+Either way: DNA test = end of revenue stream
+Deflecting the DNA test = preserving the ambiguity
+Ambiguity was the operating condition
+Resolution was the threat</div>
+    <p>When IV-D actors deflect, discourage, or fail to initiate DNA testing where paternity was never formally established, they are making a choice that preserves the revenue stream. The deflection is not incidental to the fraud. It is evidence of knowing participation in it.</p>
+    <p><em>This is not a broken system. It is a system functioning as designed.</em></p>
+
+    <h3>The In Rem Conversion</h3>
+    <p>When a court writes "jurisdiction over the minor child" it invokes in rem jurisdiction — jurisdiction over a <em>thing</em>. This silently converts the child from a person with constitutional rights into a case asset — property subject to court administration.</p>
+    <p>This conversion is the prerequisite for the revenue extraction mechanism. You cannot traffic a person under law. You can transfer property. The in rem language performs the reclassification before any hearing, finding, or order.</p>
+    <p><strong>Plain English:</strong> The moment the court wrote "jurisdiction over the minor child," it converted a human being into a case asset. That is not jurisdiction. That is a taking.</p>
+  </div>
+</section>
+
+<!-- PART FIVE: KNOWING VIOLATION -->
+<section class="doc-section" id="sec-knowing">
+  <div class="section-header" onclick="toggleSection('sec-knowing')">
+    <div class="section-meta">
+      <div class="section-num">Part Five</div>
+      <div class="section-title">The Knowing Violation</div>
+      <div class="section-sub">Why qualified immunity does not apply.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-knowing">+</div>
+  </div>
+  <div class="section-body" id="body-sec-knowing">
+    <p class="lead">Tumey v. Ohio was decided in 1927. Every attorney, magistrate, judge, CSEA director, and caseworker who has participated in a IV-D proceeding since 1975 was presumed to know Tumey before they began. There is no qualified immunity defense to a Tumey violation. The right was clearly established before anyone currently practicing law was born.</p>
+
+    <h3>Jurisdictional Opportunism</h3>
+    <p>The court claims jurisdiction when it benefits from claiming it. Disclaims jurisdiction when accountability requires it. Same court. Same case number. Same judge.</p>
+    <div class="ladder">Jurisdiction CLAIMED when:
+— Establishing support orders (IV-D payment)
+— Enforcing collection (IV-D payment)
+— Holding contempt (coercive compliance)
+— Dismissing father's motions
+— "Retaining jurisdiction" over child
+
+Jurisdiction DISCLAIMED when:
+— Father challenges void ab initio
+— Father raises constitutional violations
+— Father demands DNA testing
+— Father requests discovery
+— Accountability is required</div>
+    <p>The ambiguity is not accidental vagueness. It is a precision tool. A resolved jurisdictional question — in either direction — ends the revenue stream. Ambiguity is the operating condition that keeps it flowing.</p>
+
+    <h3>The Infinite Void — Federal Defendants Presiding Over Federal Plaintiffs</h3>
+    <p>Caperton v. A.T. Massey Coal Co., 556 U.S. 868 (2009), held that due process requires recusal when a judicial actor has a direct personal financial stake in the outcome — even absent proof of actual bias.</p>
+    <p>When every human who issued an instrument was simultaneously a named defendant in pending federal litigation brought by the party before them, the Caperton violation was total. There was no layer of the proceeding at which a neutral decision-maker existed.</p>
+    <div class="void-stack">
+      <div class="vs-title">The Compounded Void</div>
+      Void from 45 C.F.R. § 305 / Tumey financial conflict<br>
+      +<br>
+      Void from Caperton / federal defendant presiding over federal plaintiff<br>
+      +<br>
+      Void from paternity prerequisite never met<br>
+      +<br>
+      Void from absence of UCCJEA jurisdictional finding<br>
+      +<br>
+      Void from ultra vires instruments (magistrate's decisions captioned as orders)<br>
+      =<br>
+      No possible reading under which any authority existed at any layer.
+    </div>
+
+    <h3>What Changes After Notice</h3>
+    <p>Before receiving this document, an official might theoretically claim ignorance. After receiving this document — or after being served with the jurisdictional challenge notice — that argument is permanently unavailable.</p>
+    <p>Every action taken after documented notice is a willful violation of clearly established constitutional law. Personal liability under 42 U.S.C. § 1983 attaches individually. No immunity. No institutional shield.</p>
+  </div>
+</section>
+
+<!-- PART SIX: TREASON FRAMEWORK -->
+<section class="doc-section" id="sec-treason">
+  <div class="section-header" onclick="toggleSection('sec-treason')">
+    <div class="section-meta">
+      <div class="section-num">Part Six</div>
+      <div class="section-title">Three Correct Names</div>
+      <div class="section-sub">The legal term. The constitutional term. The plain English term.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-treason">+</div>
+  </div>
+  <div class="section-body" id="body-sec-treason">
+    <h4>The Legal Terms</h4>
+    <p>18 U.S.C. §§ 241, 242 — conspiracy against rights; deprivation of rights under color of law. 18 U.S.C. § 1346 — honest services fraud. 42 U.S.C. § 1983 — civil liability for constitutional violations under color of law. These are the statutes. They describe the conduct in the language courts and prosecutors use.</p>
+    <h4>The Constitutional Term</h4>
+    <p>Oath violation. Every official who participated in IV-D proceedings took an oath to uphold the Constitution. A human who administers a proceeding in knowing violation of Tumey has violated the oath that is the sole source of their authority. Authority is conditional on the oath. Oath violated = authority forfeit.</p>
+    <h4>The Plain English Term</h4>
+    <p>Betrayal. Humans trusted with authority over other people's children and financial obligations used that authority to serve their own financial interests without telling the people they were supposed to be serving.</p>
+    <div class="pull">When officials swear an oath to uphold the Constitution and then systematically use government power to violate constitutional rights for financial gain — that is betrayal of the foundational trust that makes their authority legitimate.<br><br>— Zachary L. Toler</div>
+  </div>
+</section>
+
+<!-- PART SEVEN: CONSTITUTIONAL BASELINE -->
+<section class="doc-section" id="sec-baseline">
+  <div class="section-header" onclick="toggleSection('sec-baseline')">
+    <div class="section-meta">
+      <div class="section-num">Part Seven</div>
+      <div class="section-title">Constitutional Baseline Restored</div>
+      <div class="section-sub">What happens when the fraud is removed.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-baseline">+</div>
+  </div>
+  <div class="section-body" id="body-sec-baseline">
+    <p class="lead">The most common objection: "If you void all of these proceedings, what replaces them? Chaos?" No. The Constitution replaces them. The Constitution was there before the fraud. It will be there after it.</p>
+    <p>Voiding proceedings does not create disorder. It restores the constitutional order that existed before fraud displaced it. There is no vacuum. There is only what was always there — that the fraud was covering.</p>
+    <h4>For the parent who did not participate in the fraud</h4>
+    <p>They stand on their unmodified constitutional parental rights. The void proceedings did not eliminate those rights. They performed elimination without legal authority. Performance without authority produces nothing of legal effect.</p>
+    <h4>For the parent who did participate in the fraud</h4>
+    <p>They are a human whose conduct will be evaluated on its merits without the institutional cover the void proceedings provided. False statements made to maintain fraudulently obtained funding are criminal conduct. Criminal conduct removes the costume. The dockets are the evidence.</p>
+    <h4>For the humans who wore the costumes</h4>
+    <p>The robe, the title, the bench — these are props. The acts underneath them are what the law addresses. The robe does not transfer to the violation. The violation is personal. The liability is personal.</p>
+    <h4>For the children</h4>
+    <p>They are developing humans with constitutional rights that were never validly altered — only fraudulently administered. They were always humans in the process of becoming — not case assets in a revenue system.</p>
+
+    <h3>Common Pleas Is One Court</h3>
+    <p>Ohio Common Pleas is not multiple separate courts. It is one court operating through multiple divisions — General, Domestic Relations, Juvenile, Probate. The Juvenile Division has exclusive original jurisdiction over parentage, custody, and support for children born to unmarried parents under R.C. 2151.23.</p>
+    <p>If the Juvenile Division's jurisdiction is void ab initio — every order issued by every division that derived authority from that void Juvenile proceeding is equally void. The General Division judgment lien derived from a void support order is void. The fruit of the poisonous tree travels across divisions of the same court.</p>
+    <div class="pull">You cannot enforce a void order by moving it to a different desk in the same building.</div>
+  </div>
+</section>
+
+<!-- PART EIGHT: HHS AS KINGPIN -->
+<section class="doc-section" id="sec-hhs">
+  <div class="section-header" onclick="toggleSection('sec-hhs')">
+    <div class="section-meta">
+      <div class="section-num">Part Eight</div>
+      <div class="section-title">HHS as the Hand That Feeds</div>
+      <div class="section-sub">The federal layer above the state conflict.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-hhs">+</div>
+  </div>
+  <div class="section-body" id="body-sec-hhs">
+    <p class="lead">HHS administers the incentive structure that generates the Tumey violation at the state level. HHS is not a passive funding conduit — it is the architect of the financial conflict it then funds states to perpetuate.</p>
+    <p>The hand that feeds is the hand that controls. Ohio agencies cannot terminate IV-D participation without losing federal funding they have structured their budgets around. The dependency is not incidental — it is the mechanism by which HHS maintains effective control over state family court administration without direct jurisdiction. States serve HHS performance metrics because HHS controls the revenue. Children and families are the performance metric.</p>
+
+    <h3>The Kingpin Confession</h3>
+    <p>HHS maintains a public "most wanted" list of parents who owe child support — knowing that the support orders were generated by financially conflicted proceedings, the arrears were calculated on fabricated foundations in documented cases, and the states enforcing those orders receive federal money for doing so.</p>
+    <p>HHS is publicly shaming people for not paying obligations that HHS's own incentive structure helped manufacture. That is not enforcement of legitimate obligations. That is the kingpin protecting the revenue stream by criminalizing resistance to it.</p>
+
+    <h3>The Investigator Conflict</h3>
+    <p>Federal court employees do not receive pay during government shutdowns — confirmed by firsthand account. FBI agents designated as essential personnel work without immediate pay and receive back pay after Congressional action. The people being asked to investigate federal program fraud are personally experiencing the financial consequences of that fraud while conducting the investigation.</p>
+    <p>The structural conflict is identical to the Tumey problem at the state level — just one level up. Asking the FBI to investigate HHS is asking one arm of the federal government to investigate the financial architecture of another arm that funds both of them.</p>
+
+    <h3>The Escalation Path</h3>
+    <p>State reporting agencies are nodes in the same network. Reporting the fraud to them is reporting to the enterprise. Federal channels operate outside that network:</p>
+    <ul>
+      <li><strong>HHS Office of Inspector General</strong> — independent of HHS programmatically, reports to both HHS Secretary and Congress. Has investigated IV-D fraud at the state level. oig.hhs.gov</li>
+      <li><strong>House Ways and Means Committee</strong> — Title IV-D oversight jurisdiction. Direct congressional oversight of the funding structure.</li>
+      <li><strong>Senate Finance Committee</strong> — Title IV-D oversight jurisdiction.</li>
+      <li><strong>Government Accountability Office (GAO)</strong> — the investigative arm of Congress. Systemic fraud in federal programs. gao.gov</li>
+    </ul>
+    <p>A governor with documented evidence of a 50-year constitutional violation in a federal program has standing to bring this directly to committee. File the federal record first. Report to federal oversight second. The federal docket gives the report a case number the oversight channel cannot ignore.</p>
+
+    <h3>The Historical Root</h3>
+    <p>The through-line the system never acknowledges:</p>
+    <div class="ladder">1865 — 13th Amendment abolishes slavery
+1867 — Peonage statutes criminalize debt servitude
+1935 — Social Security Act builds dependency architecture
+        Aid to Dependent Children = federal money flowing to states
+        in proportion to dependency caseloads
+        More dependent people = more federal money
+        That is not a safety net. That is dependency farming.
+1975 — Title IV-D monetizes family separation
+        The Tumey conflict is built directly into the funding formula
+2025+ — You name it. The dockets are the evidence.</div>
+    <div class="pull">Slavery was never legal. It was the Theater of Fraud that enabled it. The Declaration of Independence abolished it. The 13th Amendment abolished it again. Operation SUE abolishes it a third time — this time with the receipts.<br><br>— Zachary L. Toler</div>
+  </div>
+</section>
+
+<!-- QUICK REFERENCE -->
+<section class="doc-section" id="sec-reference">
+  <div class="section-header" onclick="toggleSection('sec-reference')">
+    <div class="section-meta">
+      <div class="section-num">Quick Reference</div>
+      <div class="section-title">Three Documents. One Request. One Rule.</div>
+      <div class="section-sub">Everything you need in one place.</div>
+    </div>
+    <div class="toggle-icon" id="icon-sec-reference">+</div>
+  </div>
+  <div class="section-body" id="body-sec-reference">
+    <h3>The Three Documents</h3>
+    <p><strong>1. 45 C.F.R. § 305</strong> — Proves the financial conflict exists as a matter of federal law. Not an allegation. A regulation.</p>
+    <p><strong>2. Tumey v. Ohio, 273 U.S. 510 (1927)</strong> — Proves that financial conflict in an adjudicating body voids its authority. Not a theory. A 100-year-old Supreme Court holding.</p>
+    <p><strong>3. The absence of a disclosure form</strong> — Proves the conflict was never cured. Not an inference. A document that doesn't exist.</p>
+
+    <h3>The One Request</h3>
+    <div class="demand">"Produce the written disclosure of the 45 C.F.R. § 305 financial interest provided to me at the initiation of this case, and my signed acknowledgment of that disclosure."</div>
+
+    <h3>The One Rule</h3>
+    <p>You cannot consent to a proceeding whose structural bias was never disclosed to you. Jurisdiction based on an undisclosed conflict was never validly granted. Every instrument it produced is void from the beginning.</p>
+
+    <h3>Case Law Reference</h3>
+    <table class="case-table">
+      <tr><th>Case</th><th>Citation</th><th>Function</th></tr>
+      <tr><td>Tumey v. Ohio</td><td>273 U.S. 510 (1927)</td><td>Financial interest voids adjudicatory authority</td></tr>
+      <tr><td>Gibson v. Berryhill</td><td>411 U.S. 564 (1973)</td><td>No neutrality = no jurisdiction — instruments void not voidable</td></tr>
+      <tr><td>Fuentes v. Shevin</td><td>407 U.S. 67 (1972)</td><td>Due process requires disclosure before rights waiver</td></tr>
+      <tr><td>D.H. Overmyer v. Frick</td><td>405 U.S. 174 (1972)</td><td>Waiver requires knowing and voluntary — impossible without disclosure</td></tr>
+      <tr><td>Stanley v. Illinois</td><td>405 U.S. 645 (1972)</td><td>Parental rights inherent — cannot be defaulted by statute</td></tr>
+      <tr><td>Caperton v. Massey</td><td>556 U.S. 868 (2009)</td><td>Due process requires recusal when personal interest in outcome present</td></tr>
+      <tr><td>Withrow v. Larkin</td><td>421 U.S. 35 (1975)</td><td>Tumey applies to agencies, not only courts</td></tr>
+      <tr><td>Marshall v. Jerrico</td><td>446 U.S. 238 (1980)</td><td>Enforcement funding tied to outcomes violates neutrality</td></tr>
+      <tr><td>Mathews v. Eldridge</td><td>424 U.S. 319 (1976)</td><td>Due process requires meaningful opportunity before deprivation</td></tr>
+      <tr><td>Mullane v. Central Hanover</td><td>339 U.S. 306 (1950)</td><td>Notice must be reasonably calculated to inform</td></tr>
+      <tr><td>Nieves v. Bartlett</td><td>587 U.S. 391 (2019)</td><td>Retaliatory enforcement violates First Amendment</td></tr>
+    </table>
+
+    <h3>Statutory Reference</h3>
+    <table class="case-table">
+      <tr><th>Statute</th><th>Function</th></tr>
+      <tr><td>45 C.F.R. § 305</td><td>Federal IV-D performance incentive formula — the conflict</td></tr>
+      <tr><td>Ohio R.C. 3109.042</td><td>Unconstitutional default stripping unmarried father's rights</td></tr>
+      <tr><td>Ohio R.C. 3111.25</td><td>Birth certificate signature = legal paternity establishment</td></tr>
+      <tr><td>42 U.S.C. § 651 et seq.</td><td>Title IV-D of the Social Security Act — the funding structure</td></tr>
+      <tr><td>42 U.S.C. § 1983</td><td>Civil liability for rights violations under color of law</td></tr>
+      <tr><td>18 U.S.C. § 241</td><td>Criminal conspiracy against rights</td></tr>
+      <tr><td>18 U.S.C. § 242</td><td>Criminal deprivation of rights under color of law</td></tr>
+      <tr><td>18 U.S.C. § 1346</td><td>Honest services fraud</td></tr>
+      <tr><td>18 U.S.C. § 1956</td><td>Money laundering — processing proceeds of unlawful activity</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- NOTE TO READER -->
+<div style="padding:40px 0;border-top:2px solid var(--black);">
+  <p style="font-family:var(--serif);font-size:18px;color:var(--black);margin-bottom:16px;line-height:1.6;">The argument in this document is finished. Three documents — a federal regulation, a 100-year-old Supreme Court decision, and the absence of a disclosure form — establish that every IV-D proceeding built on an undisclosed Tumey conflict was void from the beginning.</p>
+  <p style="font-size:15px;color:var(--mid);margin-bottom:16px;line-height:1.7;">If you are experiencing what this document describes, you are not alone. You are not wrong. And you are not without recourse.</p>
+  <p style="font-size:16px;font-weight:700;color:var(--black);">The fraud only works if you can't read it.<br>You can read it now.</p>
+</div>
+
+<footer>
+  <div class="mottos">
+    "Due Process = Disclosure = Consent."<br>
+    "Remove the costume. Describe the conduct."<br>
+    "The fraud only works if you can't read it."<br>
+    "You can read it now."
+  </div>
+  <div class="footer-meta">
+    RTF3 — Void Ab Initio | Version 1.1 | Published: March 24, 2026<br>
+    Living Document | Educational purposes only. Not legal advice.<br><br>
+    TOLER LEEGAL FOUNDATION &nbsp;·&nbsp; READINGTHEFRAUD.COM &nbsp;·&nbsp; TOLER FOR GOVERNOR
+  </div>
+</footer>
+
+<script>
+  function openSection(id) {
+    var body = document.getElementById('body-' + id);
+    var icon = document.getElementById('icon-' + id);
+    if (!body) return;
+    body.classList.add('open');
+    icon.classList.add('open');
+    icon.textContent = '×';
+    var el = document.getElementById(id);
+    if (el) {
+      setTimeout(function() {
+        var navH = document.getElementById('topnav').offsetHeight;
+        var top = el.getBoundingClientRect().top + window.pageYOffset - navH - 16;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }, 50);
+    }
+  }
+  function toggleSection(id) {
+    var body = document.getElementById('body-' + id);
+    var icon = document.getElementById('icon-' + id);
+    if (!body) return;
+    var isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    icon.classList.toggle('open', !isOpen);
+    icon.textContent = isOpen ? '+' : '×';
+  }
+</script>
+</body>
+</html>
