@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reading the Theater of Fraud — RTF0</title>
+<title>Reading the Fraud — RTF0</title>
 <style>
   :root {
     --black: #111111;
@@ -29,8 +29,6 @@
     margin: 0 auto;
     padding: 0 24px 80px;
   }
-
-  /* ── NAV ── */
   #topnav {
     position: sticky;
     top: 0;
@@ -65,338 +63,83 @@
     white-space: nowrap;
   }
   #nav-links a:hover { color: var(--black); }
-
-  /* ── HERO ── */
-  #hero {
-    padding: 72px 0 56px;
-    border-bottom: 2px solid var(--black);
-  }
-  .case-caption {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: .1em;
-    color: var(--mid);
-    margin-bottom: 24px;
-    text-transform: uppercase;
-  }
-  .case-block {
-    font-family: var(--serif);
-    font-size: 15px;
-    line-height: 2;
-    color: var(--dark);
-    margin-bottom: 32px;
-  }
-  .case-block .party { font-style: italic; }
-  .case-block .role { font-size: 12px; font-family: var(--mono); letter-spacing: .05em; color: var(--mid); }
-  .case-block .v { font-size: 22px; font-weight: bold; color: var(--black); display: block; margin: 4px 0; }
-  .case-number {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--light);
-    letter-spacing: .1em;
-  }
-  h1 {
-    font-family: var(--serif);
-    font-size: clamp(28px, 5vw, 44px);
-    font-weight: normal;
-    line-height: 1.2;
-    margin-bottom: 12px;
-  }
-  .tagline {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--mid);
-    letter-spacing: .06em;
-    margin-bottom: 32px;
-  }
-
-  /* ── DEFENDANT INDEX ── */
-  #defendant-index {
-    padding: 48px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-  #defendant-index h2 {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .15em;
-    color: var(--light);
-    text-transform: uppercase;
-    margin-bottom: 32px;
-  }
-  .def-grid {
+  .rtf-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 1px;
     background: var(--rule);
     border: 1px solid var(--rule);
+    margin-top: 1px;
   }
-  .def-card {
+  .rtf-card {
     background: var(--bg);
-    padding: 24px 20px;
-    cursor: pointer;
+    padding: 20px 16px;
+    text-decoration: none;
+    display: block;
     transition: background .15s;
   }
+  .rtf-card:hover { background: #f8f8f8; }
+  .rtf-num { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--light); text-transform: uppercase; margin-bottom: 6px; }
+  .rtf-title { font-family: var(--serif); font-size: 14px; font-weight: bold; color: var(--black); margin-bottom: 4px; line-height: 1.3; }
+  .rtf-sub { font-size: 12px; color: var(--mid); line-height: 1.4; }
+  @media(max-width:600px) { .rtf-grid { grid-template-columns: repeat(2, 1fr); } }
+  #hero { padding: 72px 0 56px; border-bottom: 2px solid var(--black); }
+  .case-caption { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--mid); margin-bottom: 24px; text-transform: uppercase; }
+  .case-block { font-family: var(--serif); font-size: 15px; line-height: 2; color: var(--dark); margin-bottom: 32px; }
+  .case-block .party { font-style: italic; }
+  .case-block .role { font-size: 12px; font-family: var(--mono); letter-spacing: .05em; color: var(--mid); }
+  .case-block .v { font-size: 22px; font-weight: bold; color: var(--black); display: block; margin: 4px 0; }
+  .case-number { font-family: var(--mono); font-size: 11px; color: var(--light); letter-spacing: .1em; }
+  h1 { font-family: var(--serif); font-size: clamp(28px, 5vw, 44px); font-weight: normal; line-height: 1.2; margin-bottom: 12px; }
+  .tagline { font-family: var(--mono); font-size: 13px; color: var(--mid); letter-spacing: .06em; margin-bottom: 32px; }
+  #defendant-index { padding: 48px 0; border-bottom: 1px solid var(--rule); }
+  #defendant-index h2 { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; color: var(--light); text-transform: uppercase; margin-bottom: 32px; }
+  .def-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .def-card { background: var(--bg); padding: 24px 20px; cursor: pointer; transition: background .15s; }
   .def-card:hover { background: #f8f8f8; }
-  .def-state {
-    font-family: var(--serif);
-    font-size: 15px;
-    font-style: italic;
-    font-weight: bold;
-    color: var(--black);
-    margin-bottom: 6px;
-  }
-  .def-quote {
-    font-size: 13px;
-    color: var(--mid);
-    line-height: 1.5;
-    margin-bottom: 10px;
-  }
-  .def-truth {
-    font-size: 13px;
-    color: var(--black);
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  .def-link {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--light);
-    letter-spacing: .05em;
-  }
-
-  /* ── SECTIONS ── */
-  .doc-section {
-    border-bottom: 1px solid var(--rule);
-  }
-  .section-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 32px 0 28px;
-    cursor: pointer;
-    user-select: none;
-  }
+  .def-state { font-family: var(--serif); font-size: 15px; font-style: italic; font-weight: bold; color: var(--black); margin-bottom: 6px; }
+  .def-quote { font-size: 13px; color: var(--mid); line-height: 1.5; margin-bottom: 10px; }
+  .def-truth { font-size: 13px; color: var(--black); font-weight: 600; margin-bottom: 8px; }
+  .def-link { font-family: var(--mono); font-size: 11px; color: var(--light); letter-spacing: .05em; }
+  .doc-section { border-bottom: 1px solid var(--rule); }
+  .section-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 32px 0 28px; cursor: pointer; user-select: none; }
   .section-header:hover .section-title { color: var(--mid); }
-  .section-meta {
-    flex: 1;
-  }
-  .section-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .12em;
-    color: var(--light);
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .section-title {
-    font-family: var(--serif);
-    font-size: 22px;
-    font-weight: normal;
-    line-height: 1.3;
-    color: var(--black);
-    transition: color .15s;
-  }
-  .section-sub {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--light);
-    margin-top: 4px;
-    letter-spacing: .05em;
-  }
-  .toggle-icon {
-    font-family: var(--mono);
-    font-size: 20px;
-    color: var(--light);
-    flex-shrink: 0;
-    margin-top: 6px;
-    transition: transform .2s;
-  }
-  .section-body {
-    display: none;
-    padding-bottom: 40px;
-  }
+  .section-meta { flex: 1; }
+  .section-num { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--light); text-transform: uppercase; margin-bottom: 6px; }
+  .section-title { font-family: var(--serif); font-size: 22px; font-weight: normal; line-height: 1.3; color: var(--black); transition: color .15s; }
+  .section-sub { font-family: var(--mono); font-size: 12px; color: var(--light); margin-top: 4px; letter-spacing: .05em; }
+  .toggle-icon { font-family: var(--mono); font-size: 20px; color: var(--light); flex-shrink: 0; margin-top: 6px; transition: transform .2s; }
+  .section-body { display: none; padding-bottom: 40px; }
   .section-body.open { display: block; }
   .toggle-icon.open { transform: rotate(45deg); }
-
-  /* ── TYPOGRAPHY INSIDE SECTIONS ── */
-  .section-body h3 {
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--mid);
-    margin: 36px 0 14px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--rule);
-  }
-  .section-body h4 {
-    font-family: var(--serif);
-    font-size: 17px;
-    font-weight: bold;
-    color: var(--black);
-    margin: 28px 0 10px;
-  }
-  .section-body p {
-    margin-bottom: 16px;
-    color: var(--dark);
-  }
-  .section-body p.lead {
-    font-family: var(--serif);
-    font-size: 19px;
-    line-height: 1.6;
-    color: var(--black);
-    margin-bottom: 24px;
-  }
-  .section-body ul, .section-body ol {
-    margin: 0 0 16px 24px;
-  }
+  .section-body h3 { font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); margin: 36px 0 14px; padding-bottom: 6px; border-bottom: 1px solid var(--rule); }
+  .section-body h4 { font-family: var(--serif); font-size: 17px; font-weight: bold; color: var(--black); margin: 28px 0 10px; }
+  .section-body p { margin-bottom: 16px; color: var(--dark); }
+  .section-body p.lead { font-family: var(--serif); font-size: 19px; line-height: 1.6; color: var(--black); margin-bottom: 24px; }
+  .section-body ul, .section-body ol { margin: 0 0 16px 24px; }
   .section-body li { margin-bottom: 6px; color: var(--dark); }
-
-  /* Sequence / ladder blocks */
-  .ladder {
-    font-family: var(--mono);
-    font-size: 13px;
-    line-height: 2;
-    background: #f8f8f8;
-    border-left: 3px solid var(--black);
-    padding: 20px 24px;
-    margin: 20px 0 24px;
-    color: var(--dark);
-    white-space: pre-wrap;
-  }
-  /* Pull quotes */
-  .pull {
-    font-family: var(--serif);
-    font-size: 20px;
-    line-height: 1.5;
-    color: var(--black);
-    border-top: 2px solid var(--black);
-    border-bottom: 1px solid var(--rule);
-    padding: 20px 0;
-    margin: 32px 0;
-  }
-  /* Two-col table */
-  .two-col {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-    margin: 20px 0 28px;
-  }
-  .two-col th {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--mid);
-    border-bottom: 1px solid var(--rule);
-    padding: 8px 12px 8px 0;
-    text-align: left;
-  }
-  .two-col td {
-    padding: 10px 12px 10px 0;
-    vertical-align: top;
-    border-bottom: 1px solid #f0f0f0;
-    color: var(--dark);
-    line-height: 1.6;
-  }
-  .two-col td:first-child {
-    font-weight: 600;
-    color: var(--black);
-    white-space: nowrap;
-    padding-right: 24px;
-  }
-  /* Count labels */
-  .count-label {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    background: var(--black);
-    color: var(--bg);
-    padding: 3px 8px;
-    margin-bottom: 12px;
-  }
-  /* Demand blocks */
-  .demand {
-    background: #f8f8f8;
-    border: 1px solid var(--rule);
-    padding: 20px 24px;
-    margin: 16px 0 24px;
-    font-size: 15px;
-    font-style: italic;
-    color: var(--dark);
-    line-height: 1.7;
-  }
-  /* Fold cards */
-  .fold-card {
-    border-left: 3px solid var(--rule);
-    padding: 16px 20px;
-    margin: 16px 0;
-  }
+  .ladder { font-family: var(--mono); font-size: 13px; line-height: 2; background: #f8f8f8; border-left: 3px solid var(--black); padding: 20px 24px; margin: 20px 0 24px; color: var(--dark); white-space: pre-wrap; }
+  .pull { font-family: var(--serif); font-size: 20px; line-height: 1.5; color: var(--black); border-top: 2px solid var(--black); border-bottom: 1px solid var(--rule); padding: 20px 0; margin: 32px 0; }
+  .two-col { width: 100%; border-collapse: collapse; font-size: 14px; margin: 20px 0 28px; }
+  .two-col th { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); border-bottom: 1px solid var(--rule); padding: 8px 12px 8px 0; text-align: left; }
+  .two-col td { padding: 10px 12px 10px 0; vertical-align: top; border-bottom: 1px solid #f0f0f0; color: var(--dark); line-height: 1.6; }
+  .two-col td:first-child { font-weight: 600; color: var(--black); white-space: nowrap; padding-right: 24px; }
+  .count-label { display: inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; background: var(--black); color: var(--bg); padding: 3px 8px; margin-bottom: 12px; }
+  .demand { background: #f8f8f8; border: 1px solid var(--rule); padding: 20px 24px; margin: 16px 0 24px; font-size: 15px; font-style: italic; color: var(--dark); line-height: 1.7; }
+  .fold-card { border-left: 3px solid var(--rule); padding: 16px 20px; margin: 16px 0; }
   .fold-card.active { border-left-color: var(--black); }
-  .fold-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--light);
-    margin-bottom: 4px;
-  }
+  .fold-num { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 4px; }
   .fold-title { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
   .fold-takes { font-size: 13px; font-family: var(--mono); color: var(--mid); margin-bottom: 8px; }
-
-  /* ── GLOSSARY ── */
-  .gloss-entry {
-    border-bottom: 1px solid #f0f0f0;
-    padding: 20px 0;
-  }
-  .gloss-term {
-    font-family: var(--serif);
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--black);
-    margin-bottom: 4px;
-  }
-  .gloss-lang {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .08em;
-    color: var(--light);
-    margin-bottom: 8px;
-  }
+  .gloss-entry { border-bottom: 1px solid #f0f0f0; padding: 20px 0; }
+  .gloss-term { font-family: var(--serif); font-size: 18px; font-weight: bold; color: var(--black); margin-bottom: 4px; }
+  .gloss-lang { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--light); margin-bottom: 8px; }
   .gloss-plain { font-size: 15px; color: var(--dark); margin-bottom: 6px; }
   .gloss-exp { font-size: 14px; color: var(--mid); font-style: italic; }
-
-  /* ── FOOTER ── */
-  footer {
-    padding: 48px 0 24px;
-    border-top: 2px solid var(--black);
-    margin-top: 48px;
-  }
-  footer .footer-top {
-    font-family: var(--serif);
-    font-size: 13px;
-    color: var(--mid);
-    margin-bottom: 16px;
-  }
-  footer .mottos {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--black);
-    line-height: 2.2;
-    margin-bottom: 24px;
-  }
-  footer .footer-meta {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--light);
-    letter-spacing: .06em;
-  }
-
-  /* ── RESPONSIVE ── */
+  footer { padding: 48px 0 24px; border-top: 2px solid var(--black); margin-top: 48px; }
+  footer .footer-top { font-family: var(--serif); font-size: 13px; color: var(--mid); margin-bottom: 16px; }
+  footer .mottos { font-family: var(--mono); font-size: 12px; color: var(--black); line-height: 2.2; margin-bottom: 24px; }
+  footer .footer-meta { font-family: var(--mono); font-size: 11px; color: var(--light); letter-spacing: .06em; }
   @media(max-width:600px) {
     body { font-size: 16px; padding: 0 16px 60px; }
     h1 { font-size: 26px; }
@@ -408,7 +151,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav id="topnav">
   <span class="site-name">READINGTHEFRAUD.COM</span>
   <div id="nav-links">
@@ -417,10 +159,13 @@
     <a href="#sec-counts">Causes of Action</a>
     <a href="#sec-tools">What To Do Now</a>
     <a href="#sec-glossary">Glossary</a>
+    <a href="rtf1.html">RTF1</a>
+    <a href="rtf2.html">RTF2</a>
+    <a href="rtf3.html">RTF3</a>
+    <a href="rtf4.html">RTF4</a>
   </div>
 </nav>
 
-<!-- HERO -->
 <header id="hero">
   <div class="case-caption">IN THE US COURT OF THE PEOPLE</div>
   <div class="case-block">
@@ -432,8 +177,8 @@
   </div>
   <div class="case-number">CASE NO. RTF-0 &nbsp;|&nbsp; 42 U.S.C. § 1983 &nbsp;|&nbsp; First, Fourth, Fourteenth Amendments</div>
   <br>
-  <h1>Reading the Theater of Fraud</h1>
-  <p class="tagline">A Citizen's Field Guide</p>
+  <h1>Reading the Fraud</h1>
+  <p class="tagline">RTF0 — The Foundation Document</p>
   <p style="font-size:15px;color:#555;max-width:600px;line-height:1.7;">
     Courts are stages. Robes are costumes. Titles are props.<br>
     You were reading a performance. No one told you that's what it was.<br><br>
@@ -441,7 +186,6 @@
   </p>
 </header>
 
-<!-- DEFENDANT INDEX -->
 <section id="defendant-index">
   <h2>Defendants — Find Yourself Here</h2>
   <div class="def-grid">
@@ -488,9 +232,14 @@
       <div class="def-link">→ Section IX / Fold 7</div>
     </div>
   </div>
+  <div class="rtf-grid">
+    <a href="rtf1.html" class="rtf-card"><div class="rtf-num">RTF1</div><div class="rtf-title">The Checklist</div><div class="rtf-sub">What to look for. No explanations.</div></a>
+    <a href="rtf2.html" class="rtf-card"><div class="rtf-num">RTF2</div><div class="rtf-title">The Legal Map</div><div class="rtf-sub">Plain English to statute cross-reference.</div></a>
+    <a href="rtf3.html" class="rtf-card"><div class="rtf-num">RTF3</div><div class="rtf-title">Void Ab Initio</div><div class="rtf-sub">The jurisdictional void argument.</div></a>
+    <a href="rtf4.html" class="rtf-card"><div class="rtf-num">RTF4</div><div class="rtf-title">Criminal Map</div><div class="rtf-sub">From color of law to federal prosecution.</div></a>
+  </div>
 </section>
 
-<!-- ═══ SECTION I: INTRODUCTION ═══ -->
 <section class="doc-section" id="sec-intro">
   <div class="section-header" onclick="toggleSection('sec-intro')">
     <div class="section-meta">
@@ -520,7 +269,6 @@ The case was the costume.</div>
   </div>
 </section>
 
-<!-- ═══ SECTION II: JURISDICTION ═══ -->
 <section class="doc-section" id="sec-jurisdiction">
   <div class="section-header" onclick="toggleSection('sec-jurisdiction')">
     <div class="section-meta">
@@ -573,7 +321,6 @@ Courts, Agencies, Officials
   </div>
 </section>
 
-<!-- ═══ SECTION III: PARTIES ═══ -->
 <section class="doc-section" id="sec-parties">
   <div class="section-header" onclick="toggleSection('sec-parties')">
     <div class="section-meta">
@@ -605,7 +352,6 @@ Courts, Agencies, Officials
   </div>
 </section>
 
-<!-- ═══ SECTION IV: TRUE STATEMENTS ═══ -->
 <section class="doc-section" id="sec-facts">
   <div class="section-header" onclick="toggleSection('sec-facts')">
     <div class="section-meta">
@@ -617,10 +363,8 @@ Courts, Agencies, Officials
   </div>
   <div class="section-body" id="body-sec-facts">
     <p class="lead">These are not arguments. These are not theories. These are observable facts stated in plain English. Read each one. Then read your documents. Find where your documents contradict them. That contradiction is your case.</p>
-
     <h3>A. The Baseline</h3>
     <p>The state's authority is not self-generating. Fraud does not become law because it is stamped, signed, and mailed. It becomes documented fraud with the court's own certification attached. Procedural correctness does not purify fraudulent substance.</p>
-
     <h3>B. The Financial Architecture</h3>
     <p>Every county Child Support Enforcement Agency in Ohio receives federal money under Title IV-D tied directly to its collection performance. This means the agency had a direct, structural, federally embedded financial stake in collecting as much as possible from you for as long as possible. That interest was never disclosed to you.</p>
     <div class="ladder">Child       =  revenue instrument
@@ -632,7 +376,6 @@ Federal Gov =  funding source</div>
     <p>Title IV-D is not the only stream. Title IV-E pays per child placed. Per child adopted. Per day of placement maintained. Title XIX funds diagnoses that may not exist. TANF, VAWA/STOP Grants, SNAP, WIC, SSI — each program a separate federal funding trigger. Resolution of need terminates the funding. Maintenance of need maintains it.</p>
     <p><strong>The child is not the beneficiary of any of these streams. The child is the instrument through which funding is generated.</strong></p>
     <p>The system doesn't need you destroyed. It needs you depleted but functional enough to keep paying.</p>
-
     <h3>C. The Disclosure That Does Not Exist</h3>
     <p>Five possible responses when you demand the disclosure document. Know what each one means before it arrives.</p>
     <table class="two-col">
@@ -643,7 +386,6 @@ Federal Gov =  funding source</div>
       <tr><td>Silence / no response.</td><td>Document the date. Silence is admission. It is also coordination evidence.</td></tr>
       <tr><td>"This request is procedurally improper."</td><td>Deflection. Jurisdiction is never procedurally improper. The objection to the question is the answer to the question.</td></tr>
     </table>
-
     <h3>D. The Mislabel Sequence</h3>
     <p>Before they can take anything from you — they have to take your name. The mislabel is the conversion mechanism. It always precedes the action. Always. And every single one of them is a confession.</p>
     <table class="two-col">
@@ -659,7 +401,6 @@ Federal Gov =  funding source</div>
       <tr><td>"Independent review"</td><td>No independent review occurred.</td></tr>
     </table>
     <p>Date every mislabel. Note the source. Note what action followed. The sequence between label and action is evidence of premeditation.</p>
-
     <h3>E. The Bifurcation Structure</h3>
     <p>One human situation does not become multiple legal matters because an institution assigns it multiple case numbers. But that is exactly what happens. And the multiplication is not administrative convenience — it is the extraction mechanism.</p>
     <div class="ladder">One incident
@@ -676,12 +417,10 @@ CSEA Case Number ............ its own federal reimbursement trigger
 Each case number = its own fees, hearings, compliance demands,
 contempt capacity, and federal reimbursement event.</div>
     <p>You are one person. You have one income. One attention. The system has unlimited capacity to generate new tracks from the same source material.</p>
-
     <h3>F. The Coordination Pattern</h3>
     <p>Coordination does not require a written agreement. It requires shared financial incentive, shared institutional protection, and shared interest in the same result. When every node in a network has a financial stake in the same outcome — coordination is the default.</p>
     <p>When every official claims not to know about the same action — the claim itself is the evidence of coordination. Independent actors who genuinely don't know something don't all not-know it in exactly the same way.</p>
     <p><em>Strategic ignorance requires more coordination than honest acknowledgment.</em></p>
-
     <h3>G. What Was Never Optional</h3>
     <ul>
       <li>Disclosure had to occur before you participated in anything.</li>
@@ -696,7 +435,6 @@ contempt capacity, and federal reimbursement event.</div>
   </div>
 </section>
 
-<!-- ═══ SECTION V: CAUSES OF ACTION ═══ -->
 <section class="doc-section" id="sec-counts">
   <div class="section-header" onclick="toggleSection('sec-counts')">
     <div class="section-meta">
@@ -708,96 +446,49 @@ contempt capacity, and federal reimbursement event.</div>
   </div>
   <div class="section-body" id="body-sec-counts">
     <p class="lead">These Counts are named in Latin — the language being used against you — returned to its actual function: precision. Learn the words. They are yours now.</p>
-
     <h3>Part One: The Process</h3>
-
     <div class="count-label">Count 1</div>
     <h4>Mens Rea — Guilty Mind</h4>
     <p>The doctrine requiring that criminal intent be proven before criminal liability attaches — here inverted. Every label they apply, every term they repeat, every conclusion they assert without evidence is a confession of the intent behind the act. The guilty mind is not yours. It is in the document. Read it there.</p>
     <p><strong>Repetition rule:</strong> Whatever they repeat is what they cannot survive. Whatever they name loudly is what they are doing quietly.</p>
-
     <div class="count-label">Count 2</div>
     <h4>Sua Sponte / Ad Hoc — On Its Own Motion / For This Occasion</h4>
     <p>Nobody asked. No lawful basis existed before the act. The actor decided — and then built the paperwork around the decision.</p>
     <p><strong>The Wummons:</strong> A summons notifies. A warrant arrests. These are legally distinct instruments. The wummons is what you get when a clerk converts a summons request into a warrant without documented authorization for that conversion from any judicial officer. It performs due process while eliminating it.</p>
-
     <div class="count-label">Count 3</div>
     <h4>Fait Accompli / A Priori — Already Done / Already Decided</h4>
     <p>The conclusion was assumed before anyone looked. The process ratified what was never actually in question. Duration is not authorization. Persistence is not legitimacy.</p>
     <div class="demand">Breaking question: "When specifically was this action authorized, by whom, under what authority — before it was taken?"</div>
     <p><strong>The 27-Minute Grand Jury:</strong> A grand jury cannot convene, receive a case, review evidence, deliberate, and return a true bill on a felony charge in 27 minutes. When the docket shows all filings timestamped within a 27-minute window — the timestamps are fraudulent, or the proceeding did not occur as represented. Either conclusion voids the indictment.</p>
-
     <h3>Part Two: The Structure</h3>
-
     <div class="count-label">Count 4</div>
     <h4>Sine Nomine / Abstractus — Without Name / Obstruction by Disappearance</h4>
     <p>"The Court finds that the defendant poses a risk..." — which court? Which judge? On which date? Reviewing which evidence? You cannot cross-examine an institution. You cannot name "The Court" as a defendant. Find the person underneath the institutional noun.</p>
     <p><em>The robe does not transfer to the violation. The violation is personal. The liability is personal.</em></p>
-
     <div class="count-label">Count 5</div>
     <h4>Duplicitas — Two-Faced by Design</h4>
     <p>Civil rules to make the order. Criminal force to enforce it. You get neither a jury nor full criminal procedural protection. Both hands take. Neither hand protects.</p>
     <p>The jury was not removed from family court because it was inefficient. The jury was removed because it was dangerous to a system that depends on findings no independent fact-finder would reach.</p>
-
     <div class="count-label">Count 6</div>
     <h4>Ab Initio — From the Beginning / Never Born</h4>
     <p>Not flawed. Not voidable. Not an error to correct on remand. Never had legal force from the moment it was created.</p>
     <p><strong>The Appeal Trap:</strong> Filing an appeal of a void order accepts the premise that the order was valid. The correct response to a void order is not appeal — it is identification as void.</p>
     <p><strong>Void — Capstone (Civil Rule 53):</strong> A magistrate issues a decision — a recommendation. Before it becomes binding, three things must occur: (1) 14-day objection window, (2) independent judicial review, (3) judge's signed judgment entry. When any of these is absent — the order was never born.</p>
     <div class="demand">Breaking question: "Please identify the specific judicial officer who signed the judgment entry adopting this magistrate's decision, the date of that entry, and the location in the record where the 14-day objection window was provided."</div>
-
     <h3>Part Three: The Effect</h3>
-
     <div class="count-label">Count 7</div>
     <h4>Minutatim — Little by Little / Extraction</h4>
     <p>Not punishment. Extraction. The system doesn't need you destroyed. It needs you depleted but functional enough to keep paying.</p>
-
-    <div class="fold-card active">
-      <div class="fold-num">Fold 1</div>
-      <div class="fold-title">Gaslighting</div>
-      <div class="fold-takes">Takes your reality</div>
-      <p style="font-size:14px;color:var(--mid);">Signal: I cannot find where they showed their work.<br>Question: "What specific evidence produced this conclusion?"</p>
-    </div>
-    <div class="fold-card">
-      <div class="fold-num">Fold 2</div>
-      <div class="fold-title">Deflection</div>
-      <div class="fold-takes">Takes your questions</div>
-      <p style="font-size:14px;color:var(--mid);">Signal: They answered a question I didn't ask.<br>Question: "Please address the specific objection as filed."</p>
-    </div>
-    <div class="fold-card">
-      <div class="fold-num">Fold 3</div>
-      <div class="fold-title">Leverage</div>
-      <div class="fold-takes">Takes your capacity</div>
-      <p style="font-size:14px;color:var(--mid);">Signal: This requirement was designed to fail.<br>Question: "How was compliance possible given the notice provided?"</p>
-    </div>
-    <div class="fold-card">
-      <div class="fold-num">Fold 4</div>
-      <div class="fold-title">Sabotage</div>
-      <div class="fold-takes">Takes your credibility</div>
-      <p style="font-size:14px;color:var(--mid);">Signal: Multiple officials are using the same words about me.<br>Question: "Please identify the factual basis for this characterization."</p>
-    </div>
-    <div class="fold-card">
-      <div class="fold-num">Fold 5</div>
-      <div class="fold-title">Undermine</div>
-      <div class="fold-takes">Takes your certainty</div>
-      <p style="font-size:14px;color:var(--mid);">Signal: I read this three times and still don't know what it claims.<br>Question: "Please state the specific claim in one plain English sentence."</p>
-    </div>
-    <div class="fold-card">
-      <div class="fold-num">Fold 6</div>
-      <div class="fold-title">Antagonize</div>
-      <div class="fold-takes">Takes your peace</div>
-      <p style="font-size:14px;color:var(--mid);">Signal: This document is trying to scare me into something.<br>Question: "Please identify the specific legal basis separate from the emotional weight."</p>
-    </div>
-    <div class="fold-card">
-      <div class="fold-num">Fold 7</div>
-      <div class="fold-title">Weaponize</div>
-      <div class="fold-takes">Takes your will</div>
-      <p style="font-size:14px;color:var(--mid);">Signal: I'm starting to wonder if there's any point.<br>Response: My documentation is not for this court. It is for the federal record.</p>
-    </div>
+    <div class="fold-card active"><div class="fold-num">Fold 1</div><div class="fold-title">Gaslighting</div><div class="fold-takes">Takes your reality</div><p style="font-size:14px;color:var(--mid);">Signal: I cannot find where they showed their work.<br>Question: "What specific evidence produced this conclusion?"</p></div>
+    <div class="fold-card"><div class="fold-num">Fold 2</div><div class="fold-title">Deflection</div><div class="fold-takes">Takes your questions</div><p style="font-size:14px;color:var(--mid);">Signal: They answered a question I didn't ask.<br>Question: "Please address the specific objection as filed."</p></div>
+    <div class="fold-card"><div class="fold-num">Fold 3</div><div class="fold-title">Leverage</div><div class="fold-takes">Takes your capacity</div><p style="font-size:14px;color:var(--mid);">Signal: This requirement was designed to fail.<br>Question: "How was compliance possible given the notice provided?"</p></div>
+    <div class="fold-card"><div class="fold-num">Fold 4</div><div class="fold-title">Sabotage</div><div class="fold-takes">Takes your credibility</div><p style="font-size:14px;color:var(--mid);">Signal: Multiple officials are using the same words about me.<br>Question: "Please identify the factual basis for this characterization."</p></div>
+    <div class="fold-card"><div class="fold-num">Fold 5</div><div class="fold-title">Undermine</div><div class="fold-takes">Takes your certainty</div><p style="font-size:14px;color:var(--mid);">Signal: I read this three times and still don't know what it claims.<br>Question: "Please state the specific claim in one plain English sentence."</p></div>
+    <div class="fold-card"><div class="fold-num">Fold 6</div><div class="fold-title">Antagonize</div><div class="fold-takes">Takes your peace</div><p style="font-size:14px;color:var(--mid);">Signal: This document is trying to scare me into something.<br>Question: "Please identify the specific legal basis separate from the emotional weight."</p></div>
+    <div class="fold-card"><div class="fold-num">Fold 7</div><div class="fold-title">Weaponize</div><div class="fold-takes">Takes your will</div><p style="font-size:14px;color:var(--mid);">Signal: I'm starting to wonder if there's any point.<br>Response: My documentation is not for this court. It is for the federal record.</p></div>
   </div>
 </section>
 
-<!-- ═══ SECTION VI: DAMAGES ═══ -->
 <section class="doc-section" id="sec-damages">
   <div class="section-header" onclick="toggleSection('sec-damages')">
     <div class="section-meta">
@@ -809,26 +500,18 @@ contempt capacity, and federal reimbursement event.</div>
   </div>
   <div class="section-body" id="body-sec-damages">
     <p class="lead">Legal complaints list economic damages. Those are real. They matter. But they are not the real damages. This section names what no complaint ever lists.</p>
-    <h4>A. Your Time</h4>
-    <p>Not hours. Not days. Years of your finite human life spent inside a machine that had no lawful authority to touch you in the first place. Time is the only resource that cannot be returned.</p>
-    <h4>B. Your Money</h4>
-    <p>Every dollar collected under a void obligation was collected by fraud. You are entitled to every dollar back — from the individuals whose names are on the documents. Civil RICO provides treble damages — three times the documented harm.</p>
-    <h4>C. Your Child</h4>
-    <p>They used your child as a revenue instrument. Reunification terminates the revenue stream. Separation maintains it. Your child's distance from you was the transaction.</p>
-    <h4>D. Your Perception of Reality</h4>
-    <p>Sustained institutional gaslighting degrades. The brain models reality based on feedback from the environment. When the environment consistently contradicts accurate perception with institutional force, the brain begins to question the perception. They created the condition. They pointed to the condition as evidence.</p>
+    <h4>A. Your Time</h4><p>Not hours. Not days. Years of your finite human life spent inside a machine that had no lawful authority to touch you in the first place. Time is the only resource that cannot be returned.</p>
+    <h4>B. Your Money</h4><p>Every dollar collected under a void obligation was collected by fraud. You are entitled to every dollar back — from the individuals whose names are on the documents. Civil RICO provides treble damages — three times the documented harm.</p>
+    <h4>C. Your Child</h4><p>They used your child as a revenue instrument. Reunification terminates the revenue stream. Separation maintains it. Your child's distance from you was the transaction.</p>
+    <h4>D. Your Perception of Reality</h4><p>Sustained institutional gaslighting degrades. The brain models reality based on feedback from the environment. When the environment consistently contradicts accurate perception with institutional force, the brain begins to question the perception. They created the condition. They pointed to the condition as evidence.</p>
     <p><strong>Your perception was right.</strong></p>
-    <h4>E. Your Health</h4>
-    <p>The nervous system does not distinguish between physical threat and sustained institutional pressure. Years of that is not stress. It is documented physiological damage produced by a system that had no lawful authority to put you under it.</p>
-    <h4>F. Your Faith</h4>
-    <p>They took the version of the world where institutions meant what they said. What replaced it is not cynicism. What replaced it is accuracy.</p>
-    <h4>G. Your Life As It Should Have Been</h4>
-    <p>The version of your life that existed before the machine touched it. They owe you that life. Not a settlement. Not a procedural victory. The actual life.</p>
+    <h4>E. Your Health</h4><p>The nervous system does not distinguish between physical threat and sustained institutional pressure. Years of that is not stress. It is documented physiological damage produced by a system that had no lawful authority to put you under it.</p>
+    <h4>F. Your Faith</h4><p>They took the version of the world where institutions meant what they said. What replaced it is not cynicism. What replaced it is accuracy.</p>
+    <h4>G. Your Life As It Should Have Been</h4><p>The version of your life that existed before the machine touched it. They owe you that life. Not a settlement. Not a procedural victory. The actual life.</p>
     <div class="pull">Remove the costume. Describe the conduct.<br>They took everything. They did it with instruments void from the beginning.</div>
   </div>
 </section>
 
-<!-- ═══ SECTION VII: WHAT SHOULD HAVE HAPPENED ═══ -->
 <section class="doc-section" id="sec-standard">
   <div class="section-header" onclick="toggleSection('sec-standard')">
     <div class="section-meta">
@@ -862,7 +545,6 @@ contempt capacity, and federal reimbursement event.</div>
   </div>
 </section>
 
-<!-- ═══ SECTION VIII: WHAT YOU CAN DO NOW ═══ -->
 <section class="doc-section" id="sec-tools">
   <div class="section-header" onclick="toggleSection('sec-tools')">
     <div class="section-meta">
@@ -912,7 +594,6 @@ I am not resisting. I am documenting."</div>
   </div>
 </section>
 
-<!-- ═══ SECTION IX: THE REALITY GAP ═══ -->
 <section class="doc-section" id="sec-reality">
   <div class="section-header" onclick="toggleSection('sec-reality')">
     <div class="section-meta">
@@ -942,7 +623,6 @@ I am not resisting. I am documenting."</div>
   </div>
 </section>
 
-<!-- ═══ SECTION X: EVIDENCE ═══ -->
 <section class="doc-section" id="sec-evidence">
   <div class="section-header" onclick="toggleSection('sec-evidence')">
     <div class="section-meta">
@@ -975,7 +655,6 @@ I am not resisting. I am documenting."</div>
   </div>
 </section>
 
-<!-- ═══ SECTION XI: RELIEF ═══ -->
 <section class="doc-section" id="sec-relief">
   <div class="section-header" onclick="toggleSection('sec-relief')">
     <div class="section-meta">
@@ -1011,7 +690,6 @@ Remove the costume. Describe the conduct.</div>
   </div>
 </section>
 
-<!-- ═══ CERTIFICATE / PROOF ═══ -->
 <section class="doc-section" id="sec-service">
   <div class="section-header" onclick="toggleSection('sec-service')">
     <div class="section-meta">
@@ -1040,7 +718,6 @@ Step 3 — Missing.</div>
   </div>
 </section>
 
-<!-- ═══ ADDENDUM ═══ -->
 <section class="doc-section" id="sec-addendum">
   <div class="section-header" onclick="toggleSection('sec-addendum')">
     <div class="section-meta">
@@ -1052,31 +729,23 @@ Step 3 — Missing.</div>
   </div>
   <div class="section-body" id="body-sec-addendum">
     <p style="font-size:13px;color:var(--mid);margin-bottom:24px;">This document is updated, not replaced. Each addition is dated and filed. The original RTF0 remains intact.</p>
-
     <h4>ADD-1 — The Caption Is The First Fraud</h4>
     <p><em>STATE OF OHIO v. [YOUR NAME]</em> — The people constitute the State of Ohio. You are one of the people. The State of Ohio cannot be adverse to itself. Officials are representatives of the people, subject to the people. The caption hides a specific human behind the full weight of sovereign authority. That is the first mislabel. It appears before a single word of the case.</p>
-
     <h4>ADD-2 — The Mugshot Mechanism</h4>
     <p>The mislabel does not wait for a conviction. Arrest triggers publication. First impression is the strongest embedded memory. No conviction required for full life sabotage. Accumulated allegations become imposed reality. This is premeditated reputational destruction wearing due process clothing.</p>
-
     <h4>ADD-3 — The Deadline Trap</h4>
     <p>Deadlines must run from verified receipt — not from filing, entry, or regular mail with no verification. A deadline you cannot know about is not a deadline. It is a trap with a timestamp.</p>
-
     <h4>ADD-4 — Family Court Definition</h4>
     <p>"Family court" is not a standalone court. It is the Domestic Relations Division of the Common Pleas Court — with the full jurisdiction of that court implicated. "Custody battle" is a mislabel that objectifies the child. Accurate framing: parental rights proceeding. Domestic Relations dockets are sealed — names appearing on publicly accessible court documents violates that protection.</p>
-
     <h4>ADD-5 — Emergency / Ex Parte Authority</h4>
     <p>Magistrates can issue temporary emergency orders ex parte — lawfully. The key word is <em>temporary</em>. The emergency exception becomes the confession when: no emergency is documented, the "temporary" order was enforced indefinitely, and the required Civil Rule 53 process never followed.</p>
-
     <h4>ADD-6 — Volume Is Not Evidence</h4>
     <p>A stack of exhibits is not overwhelming proof. It is an intimidation tactic. Do not fight the stack exhibit by exhibit — that is the trap. Dismantle the jurisdiction first. The exhibits become irrelevant automatically. Save the stack. It becomes evidence against them in the federal record.</p>
-
     <h4>ADD-7 — Efile Forgery Patterns</h4>
     <p>Wet ink on an efile is a physical impossibility without a documented print-sign-scan trail. When blue ink and black ink signatures appear on the same electronically filed document — at least one was added after the original filing. A handwritten "/s/ [Name]" is not a digital signature. Pro se litigants are blocked from efiling in Ohio courts — confirmed by court clerk staff.</p>
   </div>
 </section>
 
-<!-- ═══ GLOSSARY ═══ -->
 <section class="doc-section" id="sec-glossary">
   <div class="section-header" onclick="toggleSection('sec-glossary')">
     <div class="section-meta">
@@ -1088,85 +757,23 @@ Step 3 — Missing.</div>
   </div>
   <div class="section-body" id="body-sec-glossary">
     <p style="font-size:13px;color:var(--mid);margin-bottom:28px;">This glossary bridges slang you already know, framework terms in RTF0, and formal legal language used against you. They describe the same things. Knowing all three makes you fluent.</p>
-
-    <div class="gloss-entry">
-      <div class="gloss-term">Ab Initio</div>
-      <div class="gloss-lang">Latin: from the beginning</div>
-      <div class="gloss-plain">Never born. Not flawed — never had legal force from the moment it was created. Cannot be fixed on appeal.</div>
-      <div class="gloss-exp">Your experience: The order that was always void even when everyone acted like it wasn't.</div>
-    </div>
-    <div class="gloss-entry">
-      <div class="gloss-term">Authentication</div>
-      <div class="gloss-lang">Legal term</div>
-      <div class="gloss-plain">Proving a document is what it claims to be, by someone who actually knows, under oath, subject to questioning.</div>
-      <div class="gloss-exp">Your experience: The police report filed but never proven to accurately describe what happened.</div>
-    </div>
-    <div class="gloss-entry">
-      <div class="gloss-term">Color of Law</div>
-      <div class="gloss-lang">Legal term — 42 U.S.C. § 1983</div>
-      <div class="gloss-plain">Wearing the government costume while committing the violation. The badge, the robe, the title identifies the violation — it does not protect it.</div>
-    </div>
-    <div class="gloss-entry">
-      <div class="gloss-term">Denied Imagination</div>
-      <div class="gloss-lang">Coined term</div>
-      <div class="gloss-plain">What is denied inside gets projected outside. The label is not a description of you — it is an accurate description of what lives in the projector.</div>
-    </div>
-    <div class="gloss-entry">
-      <div class="gloss-term">Duplicitas</div>
-      <div class="gloss-lang">Latin: duplicity, two-faced</div>
-      <div class="gloss-plain">Civil rules to make the order, criminal force to enforce it. Both hands take. Neither hand protects.</div>
-      <div class="gloss-exp">Your experience: Family court — civil hearing, criminal jail for non-compliance.</div>
-    </div>
-    <div class="gloss-entry">
-      <div class="gloss-term">Fait Accompli</div>
-      <div class="gloss-lang">French/Legal: already done</div>
-      <div class="gloss-plain">The act was accomplished before the process that was supposed to authorize it. Duration is not authorization.</div>
-      <div class="gloss-exp">Your experience: The arrest before the warrant. The custody change treated as established before any court ordered it.</div>
-    </div>
-    <div class="gloss-entry">
-      <div class="gloss-term">Implied Opposites</div>
-      <div class="gloss-lang">Framework term</div>
-      <div class="gloss-plain">Whatever they repeat is what they cannot survive. Whatever they announce loudly is what they are doing quietly. Every label is a confession.</div>
-    </div>
-    <div class="gloss-entry">
-      <div class="gloss-term">Mens Rea</div>
-      <div class="gloss-lang">Latin: guilty mind</div>
-      <div class="gloss-plain">Here inverted — the language of their documents reveals their intent. The guilty mind is in the document. Read it there.</div>
-    </div>
-    <div class="gloss-entry">
-      <div class="gloss-term">Minutatim</div>
-      <div class="gloss-lang">Latin: little by little</div>
-      <div class="gloss-plain">Extraction by small degrees. Not punishment — resource management. Each fold takes something specific. The accumulation is the mechanism.</div>
-    </div>
-    <div class="gloss-entry">
-      <div class="gloss-term">Sine Nomine</div>
-      <div class="gloss-lang">Latin: without name</div>
-      <div class="gloss-plain">The individual author disappears behind the institutional noun. "The Court finds" — no human identified, no accountability possible.</div>
-    </div>
-    <div class="gloss-entry">
-      <div class="gloss-term">Sua Sponte</div>
-      <div class="gloss-lang">Latin: on its own motion</div>
-      <div class="gloss-plain">Nobody asked. No lawful predicate existed. The actor decided on their own initiative and built the paperwork around the decision.</div>
-    </div>
-    <div class="gloss-entry">
-      <div class="gloss-term">Tumey Disclosure</div>
-      <div class="gloss-lang">Legal term — Tumey v. Ohio, 273 U.S. 510 (1927)</div>
-      <div class="gloss-plain">A decision-maker with a financial interest in the outcome must disclose that interest before the proceeding begins. Failure to disclose voids the proceeding.</div>
-    </div>
-    <div class="gloss-entry">
-      <div class="gloss-term">Void</div>
-      <div class="gloss-lang">Legal term</div>
-      <div class="gloss-plain">Never had legal force. Not flawed — never born. Cannot be appealed because appeal accepts the premise that the order was valid.</div>
-    </div>
-    <div class="gloss-entry">
-      <div class="gloss-term">Wummons</div>
-      <div class="gloss-lang">Coined term</div>
-      <div class="gloss-plain">A hybrid instrument using summons language (notification, appearance, rights) while functioning as a warrant (arrest, detention, force). The clerk converted a notification request into arrest authority without documented authorization. It performs due process while eliminating it.</div>
-    </div>
+    <div class="gloss-entry"><div class="gloss-term">Ab Initio</div><div class="gloss-lang">Latin: from the beginning</div><div class="gloss-plain">Never born. Not flawed — never had legal force from the moment it was created. Cannot be fixed on appeal.</div><div class="gloss-exp">Your experience: The order that was always void even when everyone acted like it wasn't.</div></div>
+    <div class="gloss-entry"><div class="gloss-term">Authentication</div><div class="gloss-lang">Legal term</div><div class="gloss-plain">Proving a document is what it claims to be, by someone who actually knows, under oath, subject to questioning.</div><div class="gloss-exp">Your experience: The police report filed but never proven to accurately describe what happened.</div></div>
+    <div class="gloss-entry"><div class="gloss-term">Color of Law</div><div class="gloss-lang">Legal term — 42 U.S.C. § 1983</div><div class="gloss-plain">Wearing the government costume while committing the violation. The badge, the robe, the title identifies the violation — it does not protect it.</div></div>
+    <div class="gloss-entry"><div class="gloss-term">Denied Imagination</div><div class="gloss-lang">Coined term</div><div class="gloss-plain">What is denied inside gets projected outside. The label is not a description of you — it is an accurate description of what lives in the projector.</div></div>
+    <div class="gloss-entry"><div class="gloss-term">Duplicitas</div><div class="gloss-lang">Latin: duplicity, two-faced</div><div class="gloss-plain">Civil rules to make the order, criminal force to enforce it. Both hands take. Neither hand protects.</div><div class="gloss-exp">Your experience: Family court — civil hearing, criminal jail for non-compliance.</div></div>
+    <div class="gloss-entry"><div class="gloss-term">Fait Accompli</div><div class="gloss-lang">French/Legal: already done</div><div class="gloss-plain">The act was accomplished before the process that was supposed to authorize it. Duration is not authorization.</div><div class="gloss-exp">Your experience: The arrest before the warrant. The custody change treated as established before any court ordered it.</div></div>
+    <div class="gloss-entry"><div class="gloss-term">Implied Opposites</div><div class="gloss-lang">Framework term</div><div class="gloss-plain">Whatever they repeat is what they cannot survive. Whatever they announce loudly is what they are doing quietly. Every label is a confession.</div></div>
+    <div class="gloss-entry"><div class="gloss-term">Mens Rea</div><div class="gloss-lang">Latin: guilty mind</div><div class="gloss-plain">Here inverted — the language of their documents reveals their intent. The guilty mind is in the document. Read it there.</div></div>
+    <div class="gloss-entry"><div class="gloss-term">Minutatim</div><div class="gloss-lang">Latin: little by little</div><div class="gloss-plain">Extraction by small degrees. Not punishment — resource management. Each fold takes something specific. The accumulation is the mechanism.</div></div>
+    <div class="gloss-entry"><div class="gloss-term">Sine Nomine</div><div class="gloss-lang">Latin: without name</div><div class="gloss-plain">The individual author disappears behind the institutional noun. "The Court finds" — no human identified, no accountability possible.</div></div>
+    <div class="gloss-entry"><div class="gloss-term">Sua Sponte</div><div class="gloss-lang">Latin: on its own motion</div><div class="gloss-plain">Nobody asked. No lawful predicate existed. The actor decided on their own initiative and built the paperwork around the decision.</div></div>
+    <div class="gloss-entry"><div class="gloss-term">Tumey Disclosure</div><div class="gloss-lang">Legal term — Tumey v. Ohio, 273 U.S. 510 (1927)</div><div class="gloss-plain">A decision-maker with a financial interest in the outcome must disclose that interest before the proceeding begins. Failure to disclose voids the proceeding.</div></div>
+    <div class="gloss-entry"><div class="gloss-term">Void</div><div class="gloss-lang">Legal term</div><div class="gloss-plain">Never had legal force. Not flawed — never born. Cannot be appealed because appeal accepts the premise that the order was valid.</div></div>
+    <div class="gloss-entry"><div class="gloss-term">Wummons</div><div class="gloss-lang">Coined term</div><div class="gloss-plain">A hybrid instrument using summons language (notification, appearance, rights) while functioning as a warrant (arrest, detention, force). The clerk converted a notification request into arrest authority without documented authorization. It performs due process while eliminating it.</div></div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="mottos">
     "Due Process = Disclosure = Consent."<br>
@@ -1175,41 +782,78 @@ Step 3 — Missing.</div>
     "You can read it now."
   </div>
   <div class="footer-top">
-    RTF0 — Reading the Theater of Fraud: A Citizen's Field Guide<br>
-    Version RTF0-1-2026 | First Published: March 23, 2026 | Living Document | Educational purposes only. Not legal advice.
+    RTF0 — Reading the Fraud | Version RTF0-1-2026 | First Published: March 23, 2026<br>
+    Living Document | Educational purposes only. Not legal advice.
+  </div>
+  <div style="margin:24px 0 16px;padding:20px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);">
+    <div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--light);text-transform:uppercase;margin-bottom:14px;">Support This Work</div>
+    <p style="font-size:14px;color:var(--mid);margin-bottom:20px;line-height:1.6;">This project is built and maintained by one person with no institutional backing. If it helped you — or you want to help it reach someone else — leave a tip.</p>
+    <div style="margin-bottom:16px;">
+      <a href="https://www.paypal.com/ncp/payment/26HRFMQE2JC4Y" target="_blank" style="display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.08em;background:var(--black);color:#fff;padding:12px 24px;text-decoration:none;">TIP VIA PAYPAL</a>
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--light);text-transform:uppercase;margin-bottom:6px;">₿ Bitcoin (BTC)</div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <code id="btc-addr" style="font-family:var(--mono);font-size:12px;background:#f8f8f8;border:1px solid var(--rule);padding:8px 12px;color:var(--dark);word-break:break-all;">bc1qhgfnvgtruj0l8pk2lp3l9rdzgyk5zhv8twrrfw</code>
+        <button onclick="copyAddr('btc-addr',this)" style="font-family:var(--mono);font-size:11px;letter-spacing:.08em;border:1px solid var(--rule);background:none;padding:8px 14px;cursor:pointer;color:var(--mid);">COPY</button>
+      </div>
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--light);text-transform:uppercase;margin-bottom:6px;">Ξ Ethereum (ETH)</div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <code id="eth-addr" style="font-family:var(--mono);font-size:12px;background:#f8f8f8;border:1px solid var(--rule);padding:8px 12px;color:var(--dark);word-break:break-all;">0x6E9B04636174C505065ECcf443960eFB81f1dA3D</code>
+        <button onclick="copyAddr('eth-addr',this)" style="font-family:var(--mono);font-size:11px;letter-spacing:.08em;border:1px solid var(--rule);background:none;padding:8px 14px;cursor:pointer;color:var(--mid);">COPY</button>
+      </div>
+    </div>
+    <div style="margin-bottom:20px;">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--light);text-transform:uppercase;margin-bottom:6px;">Monero (XMR) — Private by default</div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <code id="xmr-addr" style="font-family:var(--mono);font-size:12px;background:#f8f8f8;border:1px solid var(--rule);padding:8px 12px;color:var(--dark);word-break:break-all;">49Bh8484s4aFLAUzZiNPPbNPK488hmRrDhMCYjV7cAZibMZ375RrwRhc5KC8HonsQY2Dw9ZaqU4Aj6U2oNtbV6bVDCj6DeU</code>
+        <button onclick="copyAddr('xmr-addr',this)" style="font-family:var(--mono);font-size:11px;letter-spacing:.08em;border:1px solid var(--rule);background:none;padding:8px 14px;cursor:pointer;color:var(--mid);">COPY</button>
+      </div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--light);margin-top:6px;">BTC and ETH transactions are publicly traceable. XMR obscures sender, receiver, and amount.</div>
+    </div>
   </div>
   <div class="footer-meta">
-    TOLER LEEGAL FOUNDATION &nbsp;|&nbsp; READINGTHEFRAUD.COM &nbsp;|&nbsp; TOLER FOR OHIO 2026
+    TOLER LEEGAL FOUNDATION &nbsp;·&nbsp; READINGTHEFRAUD.COM &nbsp;·&nbsp; TOLER FOR GOVERNOR
   </div>
 </footer>
 
 <script>
-  function toggleSection(id) {
-    var body = document.getElementById('body-' + id);
-    var icon = document.getElementById('icon-' + id);
-    if (!body) return;
-    var isOpen = body.classList.contains('open');
-    body.classList.toggle('open', !isOpen);
-    icon.classList.toggle('open', !isOpen);
-    icon.textContent = isOpen ? '+' : '×';
+function openSection(id) {
+  var body = document.getElementById('body-' + id);
+  var icon = document.getElementById('icon-' + id);
+  if (!body) return;
+  body.classList.add('open');
+  icon.classList.add('open');
+  icon.textContent = '×';
+  var el = document.getElementById(id);
+  if (el) {
+    setTimeout(function() {
+      var navH = document.getElementById('topnav').offsetHeight;
+      var top = el.getBoundingClientRect().top + window.pageYOffset - navH - 16;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }, 50);
   }
+}
 
-  function openSection(id) {
-    var body = document.getElementById('body-' + id);
-    var icon = document.getElementById('icon-' + id);
-    if (!body) return;
-    body.classList.add('open');
-    icon.classList.add('open');
-    icon.textContent = '×';
-    var el = document.getElementById(id);
-    if (el) {
-      setTimeout(function(){
-        var navH = document.getElementById('topnav').offsetHeight;
-        var top = el.getBoundingClientRect().top + window.pageYOffset - navH - 16;
-        window.scrollTo({top: top, behavior: 'smooth'});
-      }, 50);
-    }
-  }
+function toggleSection(id) {
+  var body = document.getElementById('body-' + id);
+  var icon = document.getElementById('icon-' + id);
+  if (!body) return;
+  var isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  icon.classList.toggle('open', !isOpen);
+  icon.textContent = isOpen ? '+' : '×';
+}
+
+function copyAddr(id, btn) {
+  var txt = document.getElementById(id).textContent.trim();
+  navigator.clipboard.writeText(txt).then(function() {
+    btn.textContent = 'COPIED';
+    setTimeout(function() { btn.textContent = 'COPY'; }, 2000);
+  });
+}
 </script>
 </body>
 </html>
