@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RTF-B1 — The Custody Vacuum | Reading the Fraud</title>
+<style>
+  :root {
+    --black: #111111;
+    --dark: #222222;
+    --mid: #555555;
+    --light: #999999;
+    --rule: #dddddd;
+    --bg: #ffffff;
+    --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --serif: Georgia, 'Times New Roman', serif;
+    --mono: 'Courier New', Courier, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.75;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+  #topnav {
+    position: sticky; top: 0; background: var(--bg);
+    border-bottom: 1px solid var(--rule); padding: 10px 0;
+    z-index: 100; display: flex; align-items: center;
+    justify-content: space-between; gap: 12px;
+  }
+  #topnav .site-name { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--mid); white-space: nowrap; }
+  #topnav .site-name a { color: var(--mid); text-decoration: none; }
+  #topnav .site-name a:hover { color: var(--black); }
+  #nav-links { display: flex; gap: 16px; flex-wrap: wrap; justify-content: flex-end; }
+  #nav-links a { font-size: 12px; font-family: var(--mono); color: var(--mid); text-decoration: none; letter-spacing: .05em; white-space: nowrap; }
+  #nav-links a:hover { color: var(--black); }
+
+  #hero { padding: 72px 0 48px; border-bottom: 2px solid var(--black); }
+  .doc-label { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; color: var(--light); text-transform: uppercase; margin-bottom: 16px; }
+  h1 { font-family: var(--serif); font-size: clamp(26px, 5vw, 40px); font-weight: normal; line-height: 1.2; margin-bottom: 10px; }
+  .tagline { font-family: var(--mono); font-size: 13px; color: var(--mid); letter-spacing: .06em; margin-bottom: 28px; }
+  .hero-desc { font-size: 15px; color: var(--mid); max-width: 600px; line-height: 1.7; margin-bottom: 12px; }
+  .series-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+  .series-nav a { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; padding: 6px 12px; border: 1px solid var(--rule); color: var(--mid); text-decoration: none; transition: all .15s; }
+  .series-nav a:hover { border-color: var(--black); color: var(--black); }
+  .series-nav a.current { background: var(--black); color: var(--bg); border-color: var(--black); }
+
+  .brief-meta { padding: 20px 0; border-bottom: 1px solid var(--rule); font-family: var(--mono); font-size: 12px; color: var(--light); letter-spacing: .06em; line-height: 2; }
+
+  /* PART STRUCTURE — not collapsible, flows as document */
+  .part { padding: 48px 0; border-bottom: 1px solid var(--rule); }
+  .part-num { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; color: var(--light); text-transform: uppercase; margin-bottom: 8px; }
+  .part-title { font-family: var(--serif); font-size: 26px; font-weight: normal; color: var(--black); margin-bottom: 20px; line-height: 1.3; }
+  .part p { margin-bottom: 18px; color: var(--dark); line-height: 1.75; }
+  .part p.lead { font-family: var(--serif); font-size: 20px; line-height: 1.6; color: var(--black); margin-bottom: 28px; }
+  .part h3 { font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); margin: 36px 0 14px; padding-bottom: 6px; border-bottom: 1px solid var(--rule); }
+  .part h4 { font-family: var(--serif); font-size: 17px; font-weight: bold; color: var(--black); margin: 24px 0 10px; }
+  .part ul { margin: 0 0 18px 24px; }
+  .part li { margin-bottom: 8px; color: var(--dark); }
+
+  .ladder { font-family: var(--mono); font-size: 13px; line-height: 2; background: #f8f8f8; border-left: 3px solid var(--black); padding: 20px 24px; margin: 20px 0 24px; color: var(--dark); white-space: pre-wrap; }
+  .pull { font-family: var(--serif); font-size: 20px; line-height: 1.5; color: var(--black); border-top: 2px solid var(--black); border-bottom: 1px solid var(--rule); padding: 20px 0; margin: 32px 0; }
+  .demand { background: #f8f8f8; border: 1px solid var(--rule); padding: 20px 24px; margin: 20px 0 28px; font-size: 15px; font-style: italic; color: var(--dark); line-height: 1.7; }
+  .conclusion-block { background: var(--black); color: var(--bg); padding: 24px 28px; margin: 28px 0; font-family: var(--serif); font-size: 16px; line-height: 1.8; }
+  .cite-note { font-family: var(--mono); font-size: 12px; color: var(--mid); margin-top: -12px; margin-bottom: 18px; }
+
+  /* SEQUENTIAL COLLAPSE */
+  .seq-collapse { margin: 24px 0; }
+  .seq-level { display: flex; align-items: flex-start; gap: 16px; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+  .seq-level:last-child { border-bottom: none; }
+  .seq-label { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--light); white-space: nowrap; min-width: 80px; padding-top: 2px; }
+  .seq-content { font-size: 15px; color: var(--dark); }
+  .seq-content strong { color: var(--black); }
+  .seq-arrow { font-family: var(--mono); color: var(--light); padding: 12px 0 0 96px; font-size: 14px; }
+
+  /* THE ONE QUESTION */
+  .one-question { padding: 40px 0; border-bottom: 1px solid var(--rule); }
+  .oq-label { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; color: var(--light); text-transform: uppercase; margin-bottom: 16px; }
+  .oq-text { font-family: var(--serif); font-size: 20px; font-style: italic; color: var(--black); line-height: 1.6; border-left: 4px solid var(--black); padding-left: 24px; margin-bottom: 20px; }
+  .oq-consequence { font-size: 15px; color: var(--mid); line-height: 1.7; }
+
+  /* FOOTNOTE */
+  .footnote-section { padding: 48px 0 24px; border-top: 2px solid var(--black); margin-top: 48px; }
+  .footnote-rule { width: 60px; height: 1px; background: var(--rule); margin-bottom: 20px; }
+  .footnote-text { font-family: var(--serif); font-size: 16px; font-style: italic; color: var(--black); line-height: 1.7; margin-bottom: 32px; }
+
+  footer { padding: 32px 0 24px; border-top: 1px solid var(--rule); }
+  .mottos { font-family: var(--mono); font-size: 12px; color: var(--black); line-height: 2.4; margin-bottom: 24px; }
+  .footer-meta { font-family: var(--mono); font-size: 11px; color: var(--light); letter-spacing: .06em; line-height: 2; }
+
+  @media(max-width:600px) {
+    body { font-size: 16px; padding: 0 16px 60px; }
+    h1 { font-size: 24px; }
+    #nav-links { display: none; }
+    .ladder { font-size: 12px; }
+    .seq-label { min-width: 60px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="topnav">
+  <span class="site-name"><a href="index.html">READINGTHEFRAUD.COM</a></span>
+  <div id="nav-links">
+    <a href="index.html">RTF0</a>
+    <a href="rtf2.html">RTF2</a>
+    <a href="rtf3.html">RTF3</a>
+    <a href="rtf4.html">RTF4</a>
+    <a href="rtfb1.html">RTF-B1</a>
+  </div>
+</nav>
+
+<header id="hero">
+  <div class="doc-label">Reading the Fraud — Supplemental Brief Series</div>
+  <h1>RTF-B1 — The Custody Vacuum</h1>
+  <p class="tagline">A Jurisdictional Brief</p>
+  <p class="hero-desc">Which court has constitutional authority to establish custody of a child? The answer exposes a structural gap that every family court in America operates inside — without acknowledging it. Because acknowledging it would require every custody determination issued without constitutional jurisdiction to be identified as what it is.</p>
+  <p class="hero-desc">Not a court order. An administrative output of a revenue enterprise wearing a court's costume.</p>
+  <div class="series-nav">
+    <a href="index.html">RTF0 — Foundation</a>
+    <a href="rtf2.html">RTF2 — Legal Map</a>
+    <a href="rtf3.html">RTF3 — Void Ab Initio</a>
+    <a href="rtf4.html">RTF4 — Criminal Map</a>
+    <a class="current" href="rtfb1.html">RTF-B1 — Custody Vacuum</a>
+  </div>
+</header>
+
+<div class="brief-meta">
+  RTF-B1 &nbsp;·&nbsp; Jurisdictional Brief &nbsp;·&nbsp; Version 1.0 &nbsp;·&nbsp; March 24, 2026<br>
+  Cross-references: RTF3 (Void Ab Initio) &nbsp;·&nbsp; RTF3 Part 3 (Statutory Default) &nbsp;·&nbsp; RTF4 Part 2 (Peonage)<br>
+  Educational purposes only. Not legal advice.
+</div>
+
+<!-- PART ONE: THE QUESTION -->
+<div class="part" id="part1">
+  <div class="part-num">Part One</div>
+  <div class="part-title">The Question No One Asks</div>
+  <p class="lead">When a court issues a custody order, two things are assumed without being proven: that the court had subject matter jurisdiction over the custody question, and that the court had personal jurisdiction over both parties and the child.</p>
+  <p>Neither assumption is examined. Neither is established on the record. Both are performed through the caption at the top of the document — as though naming the court in the header creates the authority the header claims.</p>
+  <p>It does not.</p>
+  <p>A caption is not jurisdiction. A case number is not jurisdiction. A judge's signature is not jurisdiction. Jurisdiction is the legal authority to act. It must be established before the first act — not assumed from the act itself.</p>
+
+  <h3>The In Rem Conversion</h3>
+  <p>When a court writes "jurisdiction over the minor child" it invokes in rem jurisdiction — jurisdiction over a <em>thing</em>. This silently converts the child from a person with constitutional rights into a case asset — property subject to court administration.</p>
+  <p>This conversion is the prerequisite for everything that follows. You cannot traffic a person under law. You can transfer property. The in rem language performs the reclassification before any hearing, finding, or order — before anyone speaks a single word in the courtroom.</p>
+  <p>The moment the court wrote "jurisdiction over the minor child," it converted a human being into a case asset. That is not jurisdiction. That is a taking.</p>
+
+  <h3>Children as Property — The Structural Reclassification</h3>
+  <p>Ohio R.C. 3109.04 — the residential parent determination statute — uses language that mirrors property allocation: "Residential parent." "Legal custodian." "Parenting time." These are property management terms applied to a human being.</p>
+  <p>The child support order — calculated as a percentage of income, enforced like a debt, generating arrears like a loan — is the financial instrument that confirms it. The child has been converted into a revenue-producing asset whose value is calculated by the support formula and monetized through IV-D collection.</p>
+  <p>Property can be trafficked. People cannot — legally. By treating children as property assets to be allocated in civil disputes, the system creates the legal fiction that allows the revenue extraction mechanism to operate without triggering the statutes designed to stop it.</p>
+  <div class="pull">The reclassification of child as property is the prerequisite for the revenue extraction. It happens in the caption. Before the first hearing. Before you walk in the room.</div>
+</div>
+
+<!-- PART TWO: THE FEDERAL WALL -->
+<div class="part" id="part2">
+  <div class="part-num">Part Two</div>
+  <div class="part-title">The Federal Wall</div>
+  <p class="lead">Article III of the United States Constitution defines the jurisdiction of federal courts. Domestic relations — marriage, divorce, custody, child support — is not among the enumerated subjects.</p>
+  <p>Federal courts have no jurisdiction over domestic relations matters. This is not a policy choice. It is a constitutional boundary established by over 150 years of federal jurisprudence.</p>
+  <p><em>In re Burrus</em>, 136 U.S. 586 (1890): The whole subject of the domestic relations of husband and wife, parent and child, belongs to the laws of the states and not to the laws of the United States.</p>
+  <p class="cite-note">In re Burrus, 136 U.S. 586 (1890)</p>
+  <p><em>Ankenbrandt v. Richards</em>, 504 U.S. 689 (1992): The domestic relations exception divests federal courts of power to issue divorce, alimony, and child custody decrees.</p>
+  <p class="cite-note">Ankenbrandt v. Richards, 504 U.S. 689 (1992)</p>
+  <p>This means: no federal family court exists. No federal court can establish custody. No federal court can modify custody. The federal wall is constitutional and absolute.</p>
+  <div class="conclusion-block">
+    No federal family court exists.<br>
+    No federal court can establish custody.<br>
+    The federal wall is constitutional and absolute.<br><br>
+    If state courts also lack constitutional authority —<br>
+    there is no court with valid jurisdiction.<br>
+    That is the vacuum.
+  </div>
+</div>
+
+<!-- PART THREE: THE STATE FLOOR -->
+<div class="part" id="part3">
+  <div class="part-num">Part Three</div>
+  <div class="part-title">The State Floor</div>
+  <p class="lead">If federal courts cannot establish custody — states must. And states do. Every state has a family court or domestic relations division empowered by state statute to adjudicate custody matters. But state authority over custody is not unlimited.</p>
+
+  <h3>Constraint One — The UCCJEA</h3>
+  <p>The Uniform Child Custody Jurisdiction and Enforcement Act establishes which state has jurisdiction over a custody matter when multiple states are involved. It requires a court to establish "home state" jurisdiction before proceeding. Home state is the state where the child lived for six consecutive months before the proceeding began.</p>
+  <p>A court that proceeds without establishing UCCJEA jurisdiction has proceeded without subject matter jurisdiction. Every order it issues is void.</p>
+
+  <h3>Constraint Two — Constitutional Due Process</h3>
+  <p>State authority over custody does not override the constitutional rights of the parents. <em>Stanley v. Illinois</em>, 405 U.S. 645 (1972), established that parental rights are inherent — existing as a matter of constitutional law prior to any state recognition.</p>
+  <p>The state cannot eliminate inherent constitutional rights through administrative procedure. It cannot strip a parent of custody without due process — notice, hearing, neutral decision-maker, and the opportunity to be heard.</p>
+  <p>When the decision-maker has a financial interest in the outcome — as every IV-D court does under 45 C.F.R. § 305 — the due process requirement is not met. The order is void. Not voidable. Void.</p>
+
+  <h3>Constraint Three — Paternity Must Be Established First</h3>
+  <p>Ohio R.C. 3109.042 cannot operate on an unidentified person. Paternity must be established before the statute can even attempt its operation — itself unconstitutional under Stanley. The required sequence:</p>
+  <div class="ladder">Step 1 — Identify the father (paternity establishment)
+Step 2 — Apply the default statute (3109.042 — unconstitutional under Stanley)
+Step 3 — Court proceeding to restore constitutional rights
+
+When Step 1 is skipped:
+The statute never attached.
+The proceeding has no identified subject.
+The jurisdiction never attached.
+Every instrument produced is void.</div>
+  <p>Signing the birth certificate establishes paternity under R.C. 3111.25 — legally equivalent to a court-ordered paternity finding. A subsequent court proceeding to "establish" what is already established was either redundant or manufactured for IV-D billing purposes. Either way — the proceeding lacked legitimate basis.</p>
+
+  <h3>Common Pleas Is One Court</h3>
+  <p>Ohio Common Pleas is not multiple separate courts. It is one court operating through multiple divisions — General, Domestic Relations, Juvenile, Probate. The Juvenile Division has exclusive original jurisdiction over parentage, custody, and support for children born to unmarried parents under R.C. 2151.23.</p>
+  <p>Once the Juvenile Division takes jurisdiction, no other division can exercise concurrent jurisdiction over the same subject matter. If the Juvenile Division's jurisdiction is void ab initio — every order issued by every division that derived authority from that void Juvenile proceeding is equally void.</p>
+  <p>The General Division judgment lien derived from a void support order is void. You cannot enforce a void order by moving it to a different desk in the same building.</p>
+</div>
+
+<!-- PART FOUR: THE VACUUM -->
+<div class="part" id="part4">
+  <div class="part-num">Part Four</div>
+  <div class="part-title">The Vacuum</div>
+  <p class="lead">Federal courts cannot establish custody — constitutional boundary. State courts can establish custody — but only with proper jurisdiction, proper process, and a neutral decision-maker.</p>
+  <p>When a state court proceeds without establishing UCCJEA jurisdiction, or without disclosing its financial conflict under Tumey, or without establishing legal paternity before applying a paternity-dependent statute — it has proceeded without constitutional authority.</p>
+  <p>That court's order is not a custody determination. It is an administrative output that looks like a custody determination. And here is the vacuum: there is no court — federal or state — that can reach back and fill the jurisdictional gap retroactively.</p>
+  <p>The proceeding was void from inception. The order never had legal force. The custody arrangement it established was never lawfully established. The child was separated from the parent not by court order — but by an administrative document performing the function of a court order without possessing the authority that creates one.</p>
+
+  <h3>Sequential Collapse — Win Level One</h3>
+  <p>The dependency chain of legal authority moves in one direction. Challenge the foundation — everything above it collapses automatically.</p>
+
+  <div class="seq-collapse">
+    <div class="seq-level">
+      <div class="seq-label">LEVEL 1</div>
+      <div class="seq-content"><strong>No valid legal basis.</strong> R.C. 3109.042 is unconstitutional under Stanley. The statute that stripped the father's rights was void from enactment. This is where the chain breaks.</div>
+    </div>
+    <div class="seq-arrow">↓ breaks here → everything above inherits the break</div>
+    <div class="seq-level">
+      <div class="seq-label">LEVEL 2</div>
+      <div class="seq-content"><strong>No valid claim.</strong> Without a lawful basis for stripping parental rights, there was no valid claim for the court to adjudicate.</div>
+    </div>
+    <div class="seq-arrow">↓</div>
+    <div class="seq-level">
+      <div class="seq-label">LEVEL 3</div>
+      <div class="seq-content"><strong>No valid framework.</strong> Without a valid claim, the procedural framework applied to it had no subject matter to operate on.</div>
+    </div>
+    <div class="seq-arrow">↓</div>
+    <div class="seq-level">
+      <div class="seq-label">LEVEL 4</div>
+      <div class="seq-content"><strong>No valid standard.</strong> Without a valid framework, no legal standard was correctly applied — because none of them attached to a void proceeding.</div>
+    </div>
+    <div class="seq-arrow">↓</div>
+    <div class="seq-level">
+      <div class="seq-label">LEVEL 5</div>
+      <div class="seq-content"><strong>No valid proceeding.</strong> Without all of the above — there was no proceeding. There was a performance of a proceeding. The performance produced nothing of legal effect.</div>
+    </div>
+  </div>
+
+  <p>You don't need to find the error in the 2014 hearing or the 2016 order or the 2025 dismissal. The chain breaks at Level One — before the case number was assigned. Win Level One. The rest collapses with it.</p>
+</div>
+
+<!-- PART FIVE: WHAT THIS MEANS -->
+<div class="part" id="part5">
+  <div class="part-num">Part Five</div>
+  <div class="part-title">What This Means</div>
+  <p class="lead">A father who has been denied access to his child based on a void custody order is not a party to a valid legal dispute. He is a constitutional person whose inherent parental rights were never lawfully altered — only fraudulently administered.</p>
+  <p>The void order did not change his rights. It performed a change without authority. Performance without authority produces nothing of legal effect.</p>
+  <p>His rights exist in the same form they existed before the first document was filed. The void proceeding did not eliminate them. It created the appearance of elimination — and then charged him for the administration of that appearance for as long as he could be made to pay.</p>
+
+  <h3>The Plain English Resolution</h3>
+  <p>When you follow the constitutional law directly — without the costume obscuring it — the resolution is simple:</p>
+  <div class="conclusion-block">
+    One parent received funding from a void proceeding.<br>
+    One parent made false statements to maintain that funding.<br>
+    False statements = criminal conduct.<br>
+    Criminal conduct = the costume, not the parent.<br><br>
+    The other parent gets custody.<br>
+    The dockets are the evidence.<br>
+    No deep investigation needed.<br>
+    It's right there.
+  </div>
+  <p>The complexity was never necessary to reach a just outcome. The complexity was the mechanism preventing the just outcome. Every layer of procedure, every Latin term, every bifurcated case number — manufactured specifically to prevent that plain English resolution from being visible.</p>
+</div>
+
+<!-- PART SIX: THE HONEST DESCRIPTION -->
+<div class="part" id="part6">
+  <div class="part-num">Part Six</div>
+  <div class="part-title">The Honest Description</div>
+  <p class="lead">Remove the costume. Describe the conduct.</p>
+  <p>A system that generates federal revenue by separating children from parents, administers that separation through tribunals with undisclosed financial conflicts, and enforces compliance with void orders through the threat of incarceration — is not a court system.</p>
+  <p>It is a revenue operation with a custody instrument as its product and a child as its inventory.</p>
+  <p>The custody vacuum is not a flaw in the system. It is the system's most honest self-description. There is no court with constitutional authority to do what this system claims to have done. What it actually did was perform authority it never possessed — and call the performance a court order.</p>
+  <div class="pull">Help does not require a firing squad.<br>Protection does not profit from what it claims to prevent.<br>Justice does not disappear when the funding stops.</div>
+  <p>When the help disappears the moment the funding stops — it was never help. It was extraction wearing help's costume.</p>
+</div>
+
+<!-- THE ONE QUESTION -->
+<div class="one-question">
+  <div class="oq-label">The One Question</div>
+  <div class="oq-text">"Please identify the specific court, the specific jurisdictional basis, and the specific date on which this court established its authority to adjudicate the custody of this child — before it issued the first instrument affecting that custody."</div>
+  <div class="oq-consequence">If that question cannot be answered with a specific court, a specific legal basis, and a specific date that precedes the first instrument — the custody was never lawfully established. The vacuum was always there. Now you can see it.</div>
+</div>
+
+<!-- FOOTNOTE -->
+<div class="footnote-section">
+  <div class="footnote-rule"></div>
+  <div class="footnote-text">This is all for you, Charli Sue.</div>
+  <p style="font-size:14px;color:var(--light);font-family:var(--mono);">RTF-B1 — The Custody Vacuum | Version 1.0 | March 24, 2026<br>
+  Educational purposes only. Not legal advice.</p>
+</div>
+
+<footer>
+  <div class="mottos">
+    "Due Process = Disclosure = Consent."<br>
+    "Remove the costume. Describe the conduct."<br>
+    "The fraud only works if you can't read it."<br>
+    "You can read it now."
+  </div>
+  <div class="footer-meta">
+    TOLER LEEGAL FOUNDATION &nbsp;·&nbsp; READINGTHEFRAUD.COM &nbsp;·&nbsp; TOLER FOR GOVERNOR
+  </div>
+</footer>
+
+<script>
+  function openSection(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      setTimeout(function() {
+        var navH = document.getElementById('topnav').offsetHeight;
+        var top = el.getBoundingClientRect().top + window.pageYOffset - navH - 16;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }, 50);
+    }
+  }
+</script>
+</body>
+</html>
